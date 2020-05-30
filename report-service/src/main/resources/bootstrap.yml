@@ -1,9 +1,9 @@
 spring:
   application:
-    name: statistics-service
+    name: report-service
   cloud:
     config:
-      uri: http://config:8888
+      uri: http://localhost:8888
       fail-fast: true
       password: 1111
       username: user
