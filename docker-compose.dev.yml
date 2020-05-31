@@ -1,0 +1,19 @@
+version: '2.1'
+services:
+  config:
+    build: config-service
+    ports:
+      - 8888:8888
+    hostname: localhost
+
+  registry:
+    build: registry
+    hostname: localhost
+    ports:
+    - 8761:8761
+
+  report-service:
+    build: report-service
+    hostname: localhost
+    ports:
+    - 7000:7000

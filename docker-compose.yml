@@ -1,0 +1,38 @@
+version: '2.1'
+services:
+  config:
+    image: pavelitel/config-service:v1
+    restart: always
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+    container_name: config
+
+  registry:
+    image: pavelitel/registry:v1
+    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    ports:
+      - 8761:8761
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+    container_name: registry
+
+  report-service:
+    image: pavelitel/report-service:v1
+    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+    container_name: report-service
+
+
