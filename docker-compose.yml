@@ -36,6 +36,6 @@ services:
     container_name: report-service
 
   client:
-    image: pavelitel/client:v1
+    image: pavelitel/client
     restart: always
     container_name: client

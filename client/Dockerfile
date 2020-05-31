@@ -10,6 +10,6 @@ RUN npm run build
 FROM initial AS serve
 COPY --from=builder client/build/ build/
 RUN npm install -g serve 
-EXPOSE 8080
+EXPOSE 3000
 
-CMD [ "serve", "-s", "build", "-l", "8080" ]
+CMD [ "serve", "-s", "build", "-l", "3000" ]
