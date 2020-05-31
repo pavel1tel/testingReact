@@ -17,3 +17,9 @@ services:
     hostname: localhost
     ports:
     - 7000:7000
+
+  client:
+    build: client
+    hostname: localhost
+    ports:
+      - 3000:3000
