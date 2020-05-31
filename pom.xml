@@ -39,6 +39,7 @@
         <module>config-service</module>
         <module>registry</module>
         <module>report-service</module>
+        <module>auth-service</module>
     </modules>
     
 </project>

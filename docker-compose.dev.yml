@@ -23,3 +23,9 @@ services:
     hostname: localhost
     ports:
       - 3000:3000
+
+  auth-service:
+    build: auth-service
+    hostname: localhost
+    ports:
+    - 5000:5000

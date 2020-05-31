@@ -35,6 +35,19 @@ services:
         max-file: "10"
     container_name: report-service
 
+
+  auth-service:
+    image: pavelitel/auth-service:v1
+    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+    container_name: auth-service
+
   client:
     image: pavelitel/client
     restart: always
