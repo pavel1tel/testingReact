@@ -24,8 +24,20 @@ services:
     ports:
       - 3000:3000
 
+  gateway:
+    build: gateway
+    hostname: localhost
+    ports:
+      - 4321:4000
+
   auth-service:
     build: auth-service
     hostname: localhost
     ports:
     - 5000:5000
+
+  account-service:
+    build: account-service
+    hostname: localhost
+    ports:
+      - 8778:8778

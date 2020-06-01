@@ -23,6 +23,15 @@
         <java.version>1.8</java.version>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -40,6 +49,8 @@
         <module>registry</module>
         <module>report-service</module>
         <module>auth-service</module>
+        <module>gateway</module>
+        <module>account-service</module>
     </modules>
     
 </project>

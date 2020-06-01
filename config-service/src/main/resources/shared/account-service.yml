@@ -1,7 +1,7 @@
 server:
-  port: 7000
+  port: 8778
   servlet:
-    context-path: /report
+    context-path: /account
 
 spring:
   datasource:

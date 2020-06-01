@@ -1,0 +1,21 @@
+server:
+  port: 4000
+
+zuul:
+  ignoredServices: '*'
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 20000
+
+  routes:
+    report-service:
+      path: /report/**
+      serviceId: report-service
+      stripPrefix: false
+      sensitiveHeaders:
+
+    accounts:
+      path: /accounts/**
+      url: http://client:3000
+      stripPrefix: false
+      sensitiveHeaders:

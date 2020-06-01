@@ -26,6 +26,9 @@ hs_err_pid*
 /report-service/mvnw
 /registry/mvnw
 /registry/.mvn/
+/report-service/mvnw
+/registry/mvnw
+/registry/.mvn/
 
 # dependencies
 node_modules
@@ -46,3 +49,5 @@ target
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+/gateway/.mvn/
+/auth-service/.mvn/
