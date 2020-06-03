@@ -8,6 +8,12 @@ zuul:
     socket-timeout-millis: 20000
 
   routes:
+    auth-service:
+      path: /auth/**
+      url: http://auth-service:5000
+      stripPrefix: false
+      sensitiveHeaders:
+
     report-service:
       path: /report/**
       serviceId: report-service
@@ -19,3 +25,15 @@ zuul:
       url: http://client:3000
       stripPrefix: false
       sensitiveHeaders:
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 20000
+
+ribbon:
+  ReadTimeout: 20000
+  ConnectTimeout: 20000
