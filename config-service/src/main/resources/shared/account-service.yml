@@ -1,7 +1,7 @@
 server:
   port: 8778
   servlet:
-    context-path: /account
+    context-path: /accounts
 
 spring:
   datasource:
@@ -11,3 +11,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto:  update
+
+  security:
+    oauth2:
+      client:
+        clientId: account-service
+        clientSecret: secret
+        accessTokenUri: http://auth-service:5000/auth/oauth/token
+        grant-type: client_credentials
+        scope: server

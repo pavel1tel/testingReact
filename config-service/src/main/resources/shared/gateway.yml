@@ -22,7 +22,7 @@ zuul:
 
     accounts:
       path: /accounts/**
-      url: http://client:3000
+      url: account-service
       stripPrefix: false
       sensitiveHeaders:
 
