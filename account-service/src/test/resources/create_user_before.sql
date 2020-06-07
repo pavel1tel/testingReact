@@ -1,0 +1,2 @@
+insert into usr(id, created, email, password, role, status, updated, username) VALUES
+(2, '2020-05-05', 'test@gmail.com', '$2a$08$fL7u5xcvsZl78su29x1ti.dxI.9rYO8t0q5wk2ROJ.1cdR53bmaVG', 'ROLE_USER', 'Active', '2020-05-05', 'test');

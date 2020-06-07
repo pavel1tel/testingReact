@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: "jdbc:mysql://mysql-srv84190.ht-systems.ru:3306/srv84190_reactt?serverTimezone=UTC"
+    username: srv84190_paha
+    password: grib1111
+  jpa:
+    hibernate:
+      ddl-auto:  update
