@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/")
@@ -32,7 +33,7 @@ public class AccountController {
         return principal;
     }
 
-    @PreAuthorize("#oauth2.hasScope('server')")
+    @PreAuthorize("#oauth2.hasScope('server') and hasAuthority('ROLE_INSPECTOR')")
     @GetMapping("/{name}")
     public User getByName(@PathVariable String name){
         return userService.getByName(name)

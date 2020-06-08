@@ -6,7 +6,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -14,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@ToString
 @Table(name = "usr")
 public class User implements UserDetails {
 
@@ -41,8 +44,10 @@ public class User implements UserDetails {
     }
 
     @Override
-    public List<GrantedAuthority> getAuthorities() {
-        return null;
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Set<Role> userRole = new HashSet<>();
+        userRole.add(role);
+        return userRole;
     }
 
     public void setUsername(String username) {
