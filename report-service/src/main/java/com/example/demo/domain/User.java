@@ -34,4 +34,9 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "inspectors")
     private List<Report> reportsInspected;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
 }
