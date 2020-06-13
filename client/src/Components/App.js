@@ -1,14 +1,15 @@
 import React from 'react';
-import Auth from "./Components/Auth";
+import Auth from "./Auth";
 import './App.css';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
 } from "react-router-dom";
 
-const AppComponent = (props) => {
+
+export const AppComponent = (props) => {
   return (
     <div className="AppComponent">
         <Router>
@@ -24,7 +25,7 @@ const AppComponent = (props) => {
                 <Route exact path='/'>
                     Main page
                 </Route>
-                <Route exact path='/accounts' component={Auth}/>
+                <Route path='/accounts' component={Auth}/>
                 { 
                 // <Route path='/home/user' component={UserHome}/>
                 // <Route path='/home/inspector' component={InspectorHome}/>
@@ -34,5 +35,3 @@ const AppComponent = (props) => {
     </div>
   );
 }
-
-export default AppComponent;

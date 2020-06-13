@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import "loginForm.css";
+import "./loginForm.css";
 import "bootstrap/dist/css/bootstrap.css"
 
 
-const LoginForm = (props) => {
+export const LoginForm = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("  ");
 
@@ -111,6 +111,3 @@ const LoginForm = (props) => {
         </div>
     );
 }
-
-
-export default LoginForm;
