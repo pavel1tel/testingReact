@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import "../Forms.css";
-import "bootstrap/dist/css/bootstrap.css"
+//import "bootstrap/dist/css/bootstrap.css"
 import axios from 'axios';
 
 
@@ -22,24 +22,30 @@ export const LoginForm = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        const config = {
+        var axios = require('axios');
+        var qs = require('qs');
+        var data = qs.stringify({
+            'grant_type': 'password',
+            'username': email,
+            'password': password
+        });
+        var config = {
             method: 'post',
             url: 'http://localhost:4321/auth/oauth/token',
             headers: {
                 'Authorization': 'Basic c2VydmVyOnNlY3JldA==',
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            data : {
-                'grant_type': 'password',
-                'username': email,
-                'password': password
-            }
+            data: data
         };
 
         axios(config)
-            .then(res => res.data)
-            .then(data => console.log(data))
-            .catch(err => console.log(err));
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     return (

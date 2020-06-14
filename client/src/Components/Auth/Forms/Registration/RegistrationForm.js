@@ -51,7 +51,6 @@ export const RegistrationForm = (props) => {
     }
 
     const handleChange = (handleType) => (event) => {
-        event.preventDeafault();
         const targetValue = event.target.value;
 
         switch(handleType) {
@@ -135,7 +134,7 @@ export const RegistrationForm = (props) => {
                 </div>
             </form>
             <p className="text-center">
-                <a href="/accounts/auth/login"> 
+                <a href="/accounts/login">
                     i already have an account
                 </a>
             </p>
