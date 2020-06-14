@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "./loginForm.css";
 import "bootstrap/dist/css/bootstrap.css"
-import $ from 'jquery';
+import axios from 'axios';
 
 
 export const LoginForm = (props) => {
@@ -9,36 +9,37 @@ export const LoginForm = (props) => {
     const [password, setPassword] = useState("");
 
     const handleChange = (emailOrPassword) => (event) => {
-        const targetName = event.target.name;
+        event.preventDefault();
+        const targetValue = event.target.value;
 
         if (emailOrPassword === 'email') {
-            setEmail(event.target.value);
+            setEmail(targetValue);
         } else {
-            setPassword(event.target.value);
+            setPassword(targetValue);
         }
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        var settings = {
-            "url": "http://localhost:4321/auth/oauth/token",
-            "method": "POST",
-            "timeout": 0,
-            "headers": {
-                "Authorization": "Basic c2VydmVyOnNlY3JldA==",
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Cookie": "JSESSIONID=251AF6D548DF73B8CEBE77D3A3D268CF"
-            },
-            "data": {
-                "grant_type": "password",
-                "username": "pawloiwanov2@gmail.com",
-                "password": "grib1111"
-            }
+
+        const headers = new Headers();
+        headers.append("Authorization", "Basic c2VydmVyOnNlY3JldA==");
+        headers.append("Content-Type", "application/x-www-form-urlencoded");
+
+        const urlEncoded = new URLSearchParams();
+        urlEncoded.append("grant_type", "password");
+        urlEncoded.append("username", email);
+        urlEncoded.append("password", password);
+
+        const data = {
+            body: urlEncoded,
         };
 
-        $.ajax(settings).done(function (response) {
-            console.log(response);
-        });
+        axios
+          .post("localhost:4321/auth/oauth/token", data, headers)
+          .then(res => res.data)
+          .then(data => console.log(data))
+          .catch(err => console.log(err));
     }
 
 
