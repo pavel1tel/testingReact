@@ -22,24 +22,30 @@ export const LoginForm = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        const headers = new Headers();
-        headers.append("Authorization", "Basic c2VydmVyOnNlY3JldA==");
-        headers.append("Content-Type", "application/x-www-form-urlencoded");
-
-        const urlEncoded = new URLSearchParams();
-        urlEncoded.append("grant_type", "password");
-        urlEncoded.append("username", email);
-        urlEncoded.append("password", password);
-
-        const data = {
-            body: urlEncoded,
+        var axios = require('axios');
+        var qs = require('qs');
+        var data = qs.stringify({
+            'grant_type': 'password',
+            'username': email,
+            'password': password
+        });
+        var config = {
+            method: 'post',
+            url: 'http://localhost:4321/auth/oauth/token',
+            headers: {
+                'Authorization': 'Basic c2VydmVyOnNlY3JldA==',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data : data
         };
 
-        axios
-          .post("localhost:4321/auth/oauth/token", data, headers)
-          .then(res => res.data)
-          .then(data => console.log(data))
-          .catch(err => console.log(err));
+        axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
 
