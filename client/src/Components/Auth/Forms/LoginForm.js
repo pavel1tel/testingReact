@@ -1,50 +1,50 @@
 import React, { useState } from 'react';
 import "./loginForm.css";
 import "bootstrap/dist/css/bootstrap.css"
+import $ from 'jquery';
 
 
 export const LoginForm = (props) => {
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("  ");
+    const [password, setPassword] = useState("");
 
     const handleChange = (emailOrPassword) => (event) => {
-        event.preventDefault();
         const targetName = event.target.name;
 
         if (emailOrPassword === 'email') {
-            setEmail(targetName);
+            setEmail(event.target.value);
         } else {
-            setPassword(targetName);
+            setPassword(event.target.value);
         }
     }
 
-    const handleSubmit = () => {
-        const headers = new Headers();
-        headers.append("Authorization", "Basic c2VydmVyOnNlY3JldA==");
-        headers.append("Content-Type", "application/x-www-form-urlencoded");
-
-        const urlEncoded = new URLSearchParams();
-        urlEncoded.append("grant_type", "password");
-        urlEncoded.append("username", email);
-        urlEncoded.append("password", password);
-
-        const requestOptions = {
-            method: 'POST',
-            headers,
-            body: urlEncoded,
-            redirect: 'follow',
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        var settings = {
+            "url": "http://localhost:4321/auth/oauth/token",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Authorization": "Basic c2VydmVyOnNlY3JldA==",
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Cookie": "JSESSIONID=251AF6D548DF73B8CEBE77D3A3D268CF"
+            },
+            "data": {
+                "grant_type": "password",
+                "username": "pawloiwanov2@gmail.com",
+                "password": "grib1111"
+            }
         };
 
-        fetch("localhost:4321/auth/oauth/token", requestOptions)
-            .then(res => res.text())
-            .then(text => console.log(text))
-            .catch(err => console.error('error', err));
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+        });
     }
 
 
     return (
         <div id="" className="LoginForm">
-            <form action={handleSubmit} method="post">
+            <form onSubmit={handleSubmit} method="post">
                 <h2 className="text-center">
                     Login
                 </h2>

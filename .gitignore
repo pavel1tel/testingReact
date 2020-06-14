@@ -51,3 +51,4 @@ yarn-debug.log*
 yarn-error.log*
 /gateway/.mvn/
 /auth-service/.mvn/
+/client/.idea/

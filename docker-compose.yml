@@ -2,7 +2,7 @@ version: '2.1'
 services:
   config:
     image: pavelitel/config-service:v1
-    restart: always
+    restart: unless-stopped
     logging:
       options:
         max-size: "10m"
@@ -11,7 +11,7 @@ services:
 
   registry:
     image: pavelitel/registry:v1
-    restart: always
+    restart: unless-stopped
     depends_on:
       config:
         condition: service_healthy
@@ -25,7 +25,7 @@ services:
 
   report-service:
     image: pavelitel/report-service:v1
-    restart: always
+    restart: unless-stopped
     depends_on:
       config:
         condition: service_healthy
@@ -37,7 +37,7 @@ services:
 
   account-service:
     image: pavelitel/account-service:v1
-    restart: always
+    restart: unless-stopped
     depends_on:
       config:
         condition: service_healthy
@@ -50,7 +50,7 @@ services:
 
   auth-service:
     image: pavelitel/auth-service:v1
-    restart: always
+    restart: unless-stopped
     depends_on:
       config:
         condition: service_healthy
@@ -62,7 +62,7 @@ services:
 
   gateway:
     image: pavelitel/gateway:v2
-    restart: always
+    restart: unless-stopped
     depends_on:
       config:
         condition: service_healthy
@@ -74,5 +74,5 @@ services:
 
   client:
     image: pavelitel/client
-    restart: always
+    restart: unless-stopped
     container_name: client
