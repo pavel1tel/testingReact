@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import "../Forms.css";
-//import "bootstrap/dist/css/bootstrap.css"
+import "bootstrap/dist/css/bootstrap.css"
 import axios from 'axios';
+import qs from 'qs';
 
 
 export const LoginForm = (props) => {
@@ -22,21 +23,20 @@ export const LoginForm = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        var axios = require('axios');
-        var qs = require('qs');
-        var data = qs.stringify({
+        const data = qs.stringify({
             'grant_type': 'password',
             'username': email,
-            'password': password
+            password,
         });
-        var config = {
+
+        const config = {
             method: 'post',
             url: 'http://localhost:4321/auth/oauth/token',
             headers: {
                 'Authorization': 'Basic c2VydmVyOnNlY3JldA==',
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            data: data
+            data,
         };
 
         axios(config)
@@ -49,7 +49,7 @@ export const LoginForm = (props) => {
     }
 
     return (
-        <div id="LoginForm" className="LoginForm">
+        <div id="LoginForm" className="Form">
             <form onSubmit={handleSubmit} method="post">
                 <h2 className="text-center">
                     Login
@@ -106,7 +106,7 @@ export const LoginForm = (props) => {
                 {/*</div>*/}
             </form>
             <p className="text-center">
-                <a href="#"> 
+                <a href="/accounts/registration"> 
                     create an account 
                 </a>
             </p>
