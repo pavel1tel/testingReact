@@ -1,5 +1,6 @@
 import React from 'react';
-import { LoginForm } from './Forms';
+import { LoginForm } from './Forms/Login';
+import { RegistrationForm } from './Forms/Registration';
 import {
   Switch,
   Route,
@@ -14,9 +15,7 @@ const Auth = (state) => {
         <div className='Auth-root'>
             <Switch>
                 <Route path={`${path}/login`} component={LoginForm}/>
-                {
-                // <Route {`${path}/registration`} component={Registration}/>
-                }
+                <Route path={`${path}/registration`} component={RegistrationForm}/>
             </Switch>
         </div>
     );

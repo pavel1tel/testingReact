@@ -22,24 +22,42 @@ export const LoginForm = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        const headers = new Headers();
-        headers.append("Authorization", "Basic c2VydmVyOnNlY3JldA==");
-        headers.append("Content-Type", "application/x-www-form-urlencoded");
-
-        const urlEncoded = new URLSearchParams();
-        urlEncoded.append("grant_type", "password");
-        urlEncoded.append("username", email);
-        urlEncoded.append("password", password);
-
         const data = {
-            body: urlEncoded,
+            'grant_type': 'password',
+            'username': email,
+            'password': password,
+        };
+
+        const headers = {
+            'Authorization': 'Basic c2VydmVyOnNlY3JldA==',
+            'Content-Type': 'application/x-www-form-urlencoded',
         };
 
         axios
-          .post("localhost:4321/auth/oauth/token", data, headers)
+          .post("http://localhost:4321/auth/oauth/token", data, headers)
           .then(res => res.data)
           .then(data => console.log(data))
           .catch(err => console.log(err));
+
+
+        const config = {
+            method: 'post',
+            url: 'http://localhost:4321/auth/oauth/token',
+            headers: {
+                'Authorization': 'Basic c2VydmVyOnNlY3JldA==',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data : {
+                'grant_type': 'password',
+                'username': email,
+                'password': password
+            }
+        };
+
+        axios(config)
+            .then(res => res.data)
+            .then(data => console.log(data))
+            .catch(err => console.log(err));
     }
 
 
