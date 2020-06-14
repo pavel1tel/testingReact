@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { validateLoginForm } from '../Helpers/FormValidators';
 import "../Forms.css";
 import "bootstrap/dist/css/bootstrap.css"
 import axios from 'axios';
 import qs from 'qs';
+import ReactIsCapsLockActive from '@matsun/reactiscapslockactive';
 
 
 export const LoginForm = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const [emailError, setEmailError] = useState('');
 
     const handleChange = (emailOrPassword) => (event) => {
         event.preventDefault();
@@ -40,13 +44,17 @@ export const LoginForm = (props) => {
         };
 
         axios(config)
-            .then(function (response) {
-                console.log(JSON.stringify(response.data));
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+            .then(res => console.log(JSON.stringify(res.data)))
+            .catch(err => console.log(err));
     }
+
+    useEffect(() => {
+        if (email) {
+            const errMsgs = validateLoginForm(email);
+
+            setEmailError(errMsgs.emailErrMsg);
+        }
+    }, [email])
 
     return (
         <div id="LoginForm" className="Form">
@@ -65,6 +73,12 @@ export const LoginForm = (props) => {
                         value={email}
                         onChange={handleChange('email')}
                     />
+                    {email && (
+                        <div className="error">
+                            <span >{emailError}</span>
+                        </div>
+                        )
+                    }
                 </div>
                 <div className="form-group">
                     <input 
@@ -77,6 +91,11 @@ export const LoginForm = (props) => {
                         value={password}
                         onChange={handleChange('password')}
                     />
+                </div>
+                <div className="form-group">
+                    <ReactIsCapsLockActive>
+                        {active => (password || email) && active && <span className="error">note: Capslock is active </span>}
+                    </ReactIsCapsLockActive>
                 </div>
                 <div className="form-group">
                     <button 

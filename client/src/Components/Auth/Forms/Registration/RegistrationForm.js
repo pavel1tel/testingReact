@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { validateRegistrationForm } from '../Helpers/FormValidators';
 import "../Forms.css";
 import "bootstrap/dist/css/bootstrap.css";
+import ReactIsCapsLockActive from '@matsun/reactiscapslockactive';
 
 
 export const RegistrationForm = (props) => {
@@ -14,13 +16,10 @@ export const RegistrationForm = (props) => {
     const [passwordError, setPasswordError] = useState('');
     const [confirmedPasswordError, setConfirmedPasswordError] = useState('');
     const [hasErrors, setHasErrors] = useState(true);
-
-    const isNumeric = n => {
-        return !isNaN(parseFloat(n)) && isFinite(n);
-    }
+    const [formIsBlank, setFormIsBlank] = useState(true);
 
     const handleChange = (handleType) => (event) => {
-        const targetValue = event.target.value;    
+        const targetValue = event.target.value;
 
         switch(handleType) {
             case 'username':
@@ -41,47 +40,35 @@ export const RegistrationForm = (props) => {
     }
 
     useEffect(() => {
-        const validateRegistrationForm = () => {
-            const re = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+        if (!password && !email && !confirmedPassword && !username) {
+            setFormIsBlank(true);
+        } else {
+            setFormIsBlank(false);
+        }
+    }, [
+        username, email, password, confirmedPassword,
+    ]);
 
-            if (isNumeric(password)) {
-                setPasswordError("password must contain letters");
-            } else if (password.length < 8) {
-                setPasswordError("password must contain at least 8 character's");
-            } else {
-                setPasswordError('');
-            }
+    useEffect(() => {
+        if (!formIsBlank) {
+            const errMsgs = validateRegistrationForm(
+                password, username, email, confirmedPassword
+            );
 
-            if (! username) {
-                setUserameError('provide username');
-            } else {
-                setUserameError('');
-            }
-            
-            if (! re.test(email.toLowerCase())) {
-                setEmailError("invalid email");
-            } else {
-                setEmailError("");
-            }
-            
-            if (password !== confirmedPassword) {
-                setConfirmedPasswordError("password dont match");
-            } else {
-                setConfirmedPasswordError('');
-            }
+            setUserameError(errMsgs.usernameErrMsg);
+            setEmailError(errMsgs.emailErrMsg);
+            setPasswordError(errMsgs.passwordErrMsg);
+            setConfirmedPasswordError(errMsgs.confirmedPasswordErrMsg);
 
-            if (passwordError || emailError || confirmedPasswordError || usernameError) {
+            if (Object.values(errMsgs).some(err => err)) {
                 setHasErrors(true);
             } else {
                 setHasErrors(false);
             }
         }
-
-        validateRegistrationForm();
     }, [
-        username, email, password, confirmedPassword,
-        passwordError, emailError, confirmedPasswordError, usernameError
-    ])
+        username, email, password, confirmedPassword, formIsBlank,
+    ]);
 
     return (
         <div id="RegistrationForm" className="Form">
@@ -100,7 +87,7 @@ export const RegistrationForm = (props) => {
                         value={username}
                         onChange={handleChange('username')}>
                     </input>
-                    <span className="error">{usernameError}</span>
+                    <span className="error">{!formIsBlank && usernameError}</span>
                 </div>
                 <div className="form-group">
                     <input 
@@ -113,7 +100,7 @@ export const RegistrationForm = (props) => {
                         value={email}
                         onChange={handleChange('email')}>
                     </input>
-                    <span className="error">{emailError}</span>
+                    <span className="error">{!formIsBlank && emailError}</span>
                 </div>
                 <div className="form-group">
                     <input 
@@ -126,7 +113,7 @@ export const RegistrationForm = (props) => {
                         onChange={handleChange('password')}
                         required="required">
                     </input>
-                    <span className="error">{passwordError}</span>
+                    <span className="error">{!formIsBlank && passwordError}</span>
                 </div>
                 <div className="form-group">
                     <input 
@@ -139,7 +126,12 @@ export const RegistrationForm = (props) => {
                         onChange={handleChange('confirmedPassword')}
                         required="required">
                     </input>
-                    <span className="error">{confirmedPasswordError}</span>
+                    <span className="error">{!formIsBlank && confirmedPasswordError}</span>
+                </div>
+                <div className="form-group">
+                    <ReactIsCapsLockActive>
+                        {active => !formIsBlank && active && <span className="error">note: Capslock is active </span>}
+                    </ReactIsCapsLockActive>
                 </div>
                 <div className="form-group">
                     <button 

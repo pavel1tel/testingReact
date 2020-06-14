@@ -60,16 +60,16 @@ body {
     margin-right: 30px;
 }
 
-#lang li a{
+#lang li a {
     color: #56baed;
 }
-.terms{
+.terms {
     flex-shrink: 0;
-    background:#eee;
+    background: #eee;
     border:1px solid #ddd;
 }
 
-#lang{
+#lang {
     display: flex;
     align-items: center;
     justify-content: center
@@ -79,20 +79,24 @@ body {
     box-shadow: none;
 }
 
-.is-invalid{
-    border-color :red;
+.is-invalid {
+    border-color: red;
 }
 
-.is-invalid:focus{
-    border-color :red;
+.is-invalid:focus {
+    border-color: red;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.44);
 }
-.is-valid{
-    border-color : #1eff61;
+
+.is-valid {
+    border-color: #1eff61;
 }
-.is-valid:focus{
-    border-color :#1eff61;
+
+.is-valid:focus {
+    border-color: #1eff61;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(40, 167, 69, 0.25);
 }
 
-
+.pull-right {
+    padding-left: 2%;
+}
