@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "./loginForm.css";
 import "bootstrap/dist/css/bootstrap.css"
-import axios from 'axios';
+import $ from 'jquery';
 
 
 export const LoginForm = (props) => {
@@ -9,43 +9,36 @@ export const LoginForm = (props) => {
     const [password, setPassword] = useState("");
 
     const handleChange = (emailOrPassword) => (event) => {
-        event.preventDefault();
-        const targetValue = event.target.value;
+        const targetName = event.target.name;
 
         if (emailOrPassword === 'email') {
-            setEmail(targetValue);
+            setEmail(event.target.value);
         } else {
-            setPassword(targetValue);
+            setPassword(event.target.value);
         }
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
-        var axios = require('axios');
-        var qs = require('qs');
-        var data = qs.stringify({
-            'grant_type': 'password',
-            'username': email,
-            'password': password
-        });
-        var config = {
-            method: 'post',
-            url: 'http://localhost:4321/auth/oauth/token',
-            headers: {
-                'Authorization': 'Basic c2VydmVyOnNlY3JldA==',
-                'Content-Type': 'application/x-www-form-urlencoded'
+        var settings = {
+            "url": "http://localhost:4321/auth/oauth/token",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Authorization": "Basic c2VydmVyOnNlY3JldA==",
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Cookie": "JSESSIONID=251AF6D548DF73B8CEBE77D3A3D268CF"
             },
-            data : data
+            "data": {
+                "grant_type": "password",
+                "username": "pawloiwanov2@gmail.com",
+                "password": "grib1111"
+            }
         };
 
-        axios(config)
-            .then(function (response) {
-                console.log(JSON.stringify(response.data));
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+        });
     }
 
 
