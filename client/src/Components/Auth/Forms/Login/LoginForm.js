@@ -22,24 +22,6 @@ export const LoginForm = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        const data = {
-            'grant_type': 'password',
-            'username': email,
-            'password': password,
-        };
-
-        const headers = {
-            'Authorization': 'Basic c2VydmVyOnNlY3JldA==',
-            'Content-Type': 'application/x-www-form-urlencoded',
-        };
-
-        axios
-          .post("http://localhost:4321/auth/oauth/token", data, headers)
-          .then(res => res.data)
-          .then(data => console.log(data))
-          .catch(err => console.log(err));
-
-
         const config = {
             method: 'post',
             url: 'http://localhost:4321/auth/oauth/token',
@@ -59,7 +41,6 @@ export const LoginForm = (props) => {
             .then(data => console.log(data))
             .catch(err => console.log(err));
     }
-
 
     return (
         <div id="LoginForm" className="LoginForm">
