@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/")
 public class AccountController {
@@ -40,7 +41,6 @@ public class AccountController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "unable to find user"));
     }
 
-    @PreAuthorize("#oauth2.hasScope('server')")
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.OK)
     public String createUser(@Valid @RequestBody UserDTO userDTO){
