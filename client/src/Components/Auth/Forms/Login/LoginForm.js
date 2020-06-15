@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { validateLoginForm } from '../Helpers/FormValidators';
 import "../Forms.css";
-import "bootstrap/dist/css/bootstrap.css"
 import axios from 'axios';
 import qs from 'qs';
 import ReactIsCapsLockActive from '@matsun/reactiscapslockactive';

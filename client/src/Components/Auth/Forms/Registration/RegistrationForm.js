@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { validateRegistrationForm } from '../Helpers/FormValidators';
 import "../Forms.css";
-import "bootstrap/dist/css/bootstrap.css";
 import ReactIsCapsLockActive from '@matsun/reactiscapslockactive';
 
 
