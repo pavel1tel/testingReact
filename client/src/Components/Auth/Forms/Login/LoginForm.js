@@ -93,7 +93,7 @@ export const LoginForm = (props) => {
                 </div>
                 <div className="form-group">
                     <ReactIsCapsLockActive>
-                        {active => (password || email) && active && <span className="error">note: Capslock is active </span>}
+                        {active => (password || email) && active && <span className="capslock">note: Capslock is active </span>}
                     </ReactIsCapsLockActive>
                 </div>
                 <div className="form-group">

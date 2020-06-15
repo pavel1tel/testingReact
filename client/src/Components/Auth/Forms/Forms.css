@@ -38,9 +38,16 @@ body {
 }
 
 .error {
-    display:block;
-    font-size : 13px;
+    display: block;
+    font-size: 13px;
     color: #ed1327;
+    text-align: center;
+}
+
+.capslock {
+    display: block;
+    font-size: 13px;
+    color: yellow;
     text-align: center;
 }
 
