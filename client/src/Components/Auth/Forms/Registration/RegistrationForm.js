@@ -83,7 +83,7 @@ export const RegistrationForm = (props) => {
             confirmPassword: confirmedPassword
         });
 
-        var config = {
+        const config = {
             method: 'post',
             url: 'http://localhost:4321/accounts/create',
             headers: {
