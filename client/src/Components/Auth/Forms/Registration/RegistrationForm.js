@@ -10,7 +10,6 @@ import Redirect from "react-router-dom/es/Redirect";
 export const RegistrationForm = (props) => {
     
     const [username, setUsername] = useState('');
-    const [success, setSuccess] = useState(false)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmedPassword, setConfirmedPassword] = useState('');
@@ -77,39 +76,37 @@ export const RegistrationForm = (props) => {
      const handleSubmit = (event) => {
         event.preventDefault();
 
-         var data = JSON.stringify(
-             {
-                 username,
-                 email,
-                 password,
-                 confirmPassword: confirmedPassword
-             }
-             );
+        const data = JSON.stringify({
+            username,
+            email,
+            password,
+            confirmPassword: confirmedPassword
+        });
 
-         var config = {
-             method: 'post',
-             url: 'http://localhost:4321/accounts/create',
-             headers: {
-                 'Content-Type': 'application/json',
-                 'Cookie': 'JSESSIONID=101892E703543C95CC78FA5362024957'
-             },
-             data : data
-         };
+        var config = {
+            method: 'post',
+            url: 'http://localhost:4321/accounts/create',
+            headers: {
+                'Content-Type': 'application/json',
+                'Cookie': 'JSESSIONID=101892E703543C95CC78FA5362024957'
+            },
+            data
+        };
 
-         axios(config)
-             .then(function (response) {
-                 setSuccess(true);
-                 console.log(JSON.stringify(response.data));
-             })
-             .catch(function (error) {
-                 setSmthWentWrong("Something went wrong and we could not register you. Try to change email and username")
-                 console.log(error);
-             });
+        axios(config)
+            .then(res => {
+                setSmthWentWrong('');
+                console.log(JSON.stringify(res.data));
+            })
+            .catch(err => {
+                setSmthWentWrong("Something went wrong and we could not register you. Try to change email and username")
+                console.log(err);
+            });
     }
-    if (success){
+
+    if (!setSmthWentWrong) {
         return <Redirect to='/accounts/login' />
     } else {
-
         return (
             <div id="RegistrationForm" className="Form">
                 <form onSubmit={handleSubmit} method="post">
@@ -182,7 +179,9 @@ export const RegistrationForm = (props) => {
                         >
                             Sing up
                         </button>
-                        <span className="error">{smthWentWrong}</span>
+                    </div>
+                    <div className="form-group">
+                        <span className="error">{smthWentWrong && smthWentWrong}</span>
                     </div>
                 </form>
                 <p className="text-center">

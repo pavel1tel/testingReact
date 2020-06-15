@@ -25,6 +25,7 @@ export const AppComponent = (props) => {
                 // <Route path='/home/inspector' component={InspectorHome}/>
                 }
             </Switch>
+
             <Footer /> 
         </Router>
     </div>
