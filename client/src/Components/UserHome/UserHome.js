@@ -1,18 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import {oauthToken} from "../Auth/Forms/Login/LoginForm";
 import axios from 'axios';
+import {Report} from "./Report";
+import {ReportToggle} from "./ReportToggle";
 
 export const UserHome = () => {
 
    useEffect(() => {
         var data = '';
         console.log("fetching")
-       console.log(oauthToken)
         var config = {
             method: 'get',
             url: 'http://localhost:4321/report/user/reports',
             headers: {
-                'Authorization': 'Bearer ' + oauthToken
+                'Authorization': 'Bearer '
             },
             data : data
         };
@@ -25,7 +25,20 @@ export const UserHome = () => {
                 console.log(error);
             });
     });
-    console.log("render")
+
+
+
+    const report = {
+        "id" : 1,
+        "name" : "testName",
+        "description" : "testDescroption",
+        "updated" : "2020-05-25",
+        "created" : "2020-05-25",
+        "status" : "NOT_ACCEPTED",
+        "declineReason" : "reason"
+     }
+
+
     return(
         <div className="content">
             {/*<div th:replace="~{fragments/search :: search}"></div>*/}
@@ -43,17 +56,8 @@ export const UserHome = () => {
                 </tr>
                 </thead>
                 <tbody>
-                <tr className="accordion-toggle" data-toggle="collapse"></tr>
-        {/*<tr>*/}
-        {/*    <td colSpan="7" className="hiddenRow">*/}
-        {/*        <div className="accordian-body collapse" th:id="${report.getId()}">*/}
-        {/*            <div th:text="${report.getDescription()}"></div>*/}
-        {/*            <div style="background-color: #ffdfd4; border-top: 0.5px solid grey;"*/}
-        {/*                 th:if="${report.getDeclineReason() != null and report.getStatus().name().equals('NOT_ACCEPTED')}"*/}
-        {/*                 th:text="#{string.reason.toggle} + ${report.getDeclineReason()}"></div>*/}
-        {/*        </div>*/}
-        {/*        </td>*/}
-        {/*</tr>*/}
+                    <Report report = {report} />
+                    <ReportToggle report = {report} />
                 </tbody>
             </table>
             <a href="/userHome/add">
@@ -61,16 +65,6 @@ export const UserHome = () => {
                     Add
                 </button>
             </a>
-
-        {/*    <nav th:if="${reports.getTotalPages() != 0}" style="display: flex; justify-content: center"*/}
-        {/*         aria-label="Page navigation example">*/}
-        {/*        <ul className="pagination">*/}
-        {/*<span th:each="page: ${#numbers.sequence(0, reports.getTotalPages() - 1)}">*/}
-        {/*    <li className="page-item"><a className="page-link" th:href="'?page=' + ${page}"*/}
-        {/*                                 th:text="${page + 1}"></a></li>*/}
-        {/*</span>*/}
-        {/*        </ul>*/}
-        {/*    </nav>*/}
         </div>
     )
 }

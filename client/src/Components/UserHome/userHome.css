@@ -1,0 +1,19 @@
+#accepted {
+    color: green;
+}
+#notAccepted {
+    color: red;
+}
+
+#queue {
+    color: #ffbf00
+}
+
+#switch {
+    display: inline;
+}
+
+#reason {
+    background-color: #ffdfd4;
+    border-top: 0.5px solid grey;
+}
