@@ -10,9 +10,7 @@ export const LoginForm = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [emailError, setEmailError] = useState('');
-
     const setAuthToken = props.setAuthToken;
-
     const handleChange = (emailOrPassword) => (event) => {
         event.preventDefault();
         const targetValue = event.target.value;

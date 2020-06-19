@@ -14,7 +14,6 @@ import {
 
 export const AppComponent = (props) => {
     const [authToken, setAuthToken] = useState('');
-
     return (
       <div className="AppComponent">
           <Router>
