@@ -1,31 +1,44 @@
-import React, {useEffect, useState} from 'react';
-import {oauthToken} from "../Auth/Forms/Login/LoginForm";
+import React, { useEffect } from 'react';
 import axios from 'axios';
 
-export const UserHome = () => {
+export const UserHome = (props) => {
 
-   useEffect(() => {
-        var data = '';
-        console.log("fetching")
-       console.log(oauthToken)
-        var config = {
-            method: 'get',
-            url: 'http://localhost:4321/report/user/reports',
-            headers: {
-                'Authorization': 'Bearer ' + oauthToken
-            },
-            data : data
-        };
+    const authToken = props.authToken;
+    console.log(authToken);
 
-        axios(config)
-            .then(function (response) {
-                console.log(JSON.stringify(response.data));
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    });
-    console.log("render")
+    useEffect(() => {
+        const authorize = () => {
+            const data = '';
+            
+            console.log("fetching")
+            console.log(authToken)
+            
+            const config = {
+                method: 'get',
+                url: 'http://localhost:4321/report/user/reports',
+                headers: {
+                    'Authorization': 'Bearer ' + authToken
+                },
+                data
+            };
+
+            axios(config)
+                .then(function (response) {
+                    console.log(JSON.stringify(response.data));
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+
+        if (authToken) {
+            authorize();
+        }
+
+    }, [authToken]);
+
+    console.log("render");
+    
     return(
         <div className="content">
             {/*<div th:replace="~{fragments/search :: search}"></div>*/}

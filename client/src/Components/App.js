@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Auth from "./Auth";
 import './App.css';
 import { UserHome } from "./UserHome/UserHome";
@@ -13,20 +13,28 @@ import {
 
 
 export const AppComponent = (props) => {
-  return (
-    <div className="AppComponent">
-        <Router>
-            <Navbar />
+    const [authToken, setAuthToken] = useState('');
 
-            <Switch>
-                <Route exact path='/' component={VariantText} />
-                <Route path='/accounts' component={Auth} />
-                <Route path='/home/user' component={UserHome} />
-                {/*<Route path='/home/inspector' component={InspectorHome}*/}
-            </Switch>
+    return (
+      <div className="AppComponent">
+          <Router>
+              <Navbar />
 
-            <Footer /> 
-        </Router>
-    </div>
-  );
+              <Switch>
+                  <Route exact path='/' component={VariantText} />
+                  <Route 
+                      path='/accounts' 
+                      render={(props) => <Auth {...props} setAuthToken={setAuthToken} />}
+                  />
+                  <Route 
+                      path='/home/user' 
+                      render={(props) => <UserHome {...props} authToken={authToken} />}
+                  />
+                  {/*<Route path='/home/inspector' component={InspectorHome}*/}
+              </Switch>
+
+              <Footer /> 
+          </Router>
+      </div>
+    );
 }
