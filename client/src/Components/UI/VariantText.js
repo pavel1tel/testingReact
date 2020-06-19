@@ -3,7 +3,7 @@ import React from 'react';
 export const VariantText = (props) => {
 
     return (
-        <div class="content" style={{marginLeft: '2rem'}}>
+        <div className="content" style={{marginLeft: '2rem'}}>
             <h1>Варіант №5:</h1>
             <p>
                 Система Подачи Отчетов в Налоговую. Физ./Юр.лицо (далее Пользователь) регистрируется. 

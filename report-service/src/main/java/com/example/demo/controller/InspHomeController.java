@@ -25,6 +25,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequestMapping("insp")
+@CrossOrigin
 public class InspHomeController {
 
     private final ReportService reportService;

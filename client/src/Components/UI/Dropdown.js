@@ -16,7 +16,7 @@ export const Dropdown = (props) => {
             onMouseLeave={handleHover}
         >
             <a 
-                class="nav-link dropdown-toggle" 
+                className="nav-link dropdown-toggle"
                 href="#" 
                 id="navbarDropdownMenuLink" 
                 data-toggle="dropdown"
@@ -26,8 +26,8 @@ export const Dropdown = (props) => {
                 Lang
             </a>
           <div className={menuClass} style={{minWidth: '1rem'}} aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="?lang=ua">UKR</a>
-            <a class="dropdown-item" href="?lang=en">ENG</a>
+            <a className="dropdown-item" href="?lang=ua">UKR</a>
+            <a className="dropdown-item" href="?lang=en">ENG</a>
           </div>
         </div>
     );

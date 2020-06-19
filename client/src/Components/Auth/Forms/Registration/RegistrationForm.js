@@ -4,7 +4,7 @@ import "../Forms.css";
 import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.css";
 import ReactIsCapsLockActive from '@matsun/reactiscapslockactive';
-import Redirect from "react-router-dom/es/Redirect";
+import {Redirect} from "react-router-dom";
 
 
 export const RegistrationForm = (props) => {

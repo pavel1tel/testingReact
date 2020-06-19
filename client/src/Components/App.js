@@ -1,6 +1,7 @@
 import React from 'react';
 import Auth from "./Auth";
 import './App.css';
+import { UserHome } from "./UserHome/UserHome";
 import { Footer } from './UI/Footer';
 import { Navbar } from './UI/Navbar';
 import { VariantText } from './UI/VariantText';
@@ -20,10 +21,8 @@ export const AppComponent = (props) => {
             <Switch>
                 <Route exact path='/' component={VariantText} />
                 <Route path='/accounts' component={Auth} />
-                { 
-                // <Route path='/home/user' component={UserHome}/>
-                // <Route path='/home/inspector' component={InspectorHome}/>
-                }
+                <Route path='/home/user' component={UserHome} />
+                {/*<Route path='/home/inspector' component={InspectorHome}*/}
             </Switch>
 
             <Footer /> 

@@ -5,6 +5,7 @@ import axios from 'axios';
 import qs from 'qs';
 import ReactIsCapsLockActive from '@matsun/reactiscapslockactive';
 
+let oauthToken;
 
 export const LoginForm = (props) => {
     const [email, setEmail] = useState("");
@@ -43,8 +44,10 @@ export const LoginForm = (props) => {
         };
 
         axios(config)
-            .then(res => console.log(JSON.stringify(res.data)))
-            .catch(err => console.log(err));
+            .then(res => {
+                console.log(JSON.stringify(res.data));
+                oauthToken = res.data.access_token;
+            }).catch(err => console.log(err));
     }
 
     useEffect(() => {
