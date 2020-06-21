@@ -1,5 +1,11 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import "./userHome.css";
+import BootstrapTable from 'react-bootstrap-table-next';
+import TableHeaderColumn from 'react-bootstrap-table-next';
+import BootstrapButton from 'react-bootstrap-table-next';
+import {StatusSwitch, CorrectButton, ChangeButton, Date} from '../UI/HomeElements';
+
 
 export const UserHome = (props) => {
 
@@ -9,10 +15,10 @@ export const UserHome = (props) => {
     useEffect(() => {
         const authorize = () => {
             const data = '';
-            
+
             console.log("fetching")
             console.log(authToken)
-            
+
             const config = {
                 method: 'get',
                 url: 'http://localhost:4321/report/user/reports',
@@ -34,56 +40,118 @@ export const UserHome = (props) => {
         if (authToken) {
             authorize();
         }
+    });
+    console.log("render")
+//tak reporti budut prihodit s backenda
+    const report = [
+        {
+            "id": "1",
+            "name": "name",
+            "description": "desc",
+            "status": "NOT_ACCEPTED",
+            "created": [
+                2020,
+                6,
+                10
+            ],
+            "updated": [
+                2020,
+                6,
+                10
+            ],
+            "declineReason": "ne pravilna"
+        },
+        {
+            "id": "2",
+            "name": "name2",
+            "description": "desc2",
+            "status": "ACCEPTED",
+            "created": [
+                2020,
+                6,
+                10
+            ],
+            "updated": [
+                2020,
+                6,
+                10
+            ],
+            "declineReason": "ne pravilna2"
+        }
+    ]
 
-    }, [authToken]);
+    const expandRow = {
+        renderer: (row, rowIndex) => {
+            if (row.declineReason !== "null" && row.status === "NOT_ACCEPTED") {
+                return (
+                    <span>
+                        <div style={{background: "#F5F5F5", margin: 0, padding: 5}}>
+                            {`Description ${row.description}`}
+                        </div>
+                        <div id="reason">
+                            {"Reason: " + row.declineReason}
+                        </div>
+                    </span>
+                )
+            } else {
+                return (
+                    <span>
+                        <div style={{background: "#F5F5F5", margin: 0, padding: 5}}>
+                            {`Description ${row.description}`}
+                        </div>
+                    </span>
+                )
+            }
+        }
+    };
 
-    console.log("render");
-    
-    return(
-        <div className="content">
-            {/*<div th:replace="~{fragments/search :: search}"></div>*/}
-            <table className="table-condensed table table-hover">
-                <caption>Reports List</caption>
-                <thead>
-                <tr>
-                    <td>Id</td>
-                    <td>Name</td>
-                    <td>Status</td>
-                    <td>Created</td>
-                    <td>Updated</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr className="accordion-toggle" data-toggle="collapse"></tr>
-        {/*<tr>*/}
-        {/*    <td colSpan="7" className="hiddenRow">*/}
-        {/*        <div className="accordian-body collapse" th:id="${report.getId()}">*/}
-        {/*            <div th:text="${report.getDescription()}"></div>*/}
-        {/*            <div style="background-color: #ffdfd4; border-top: 0.5px solid grey;"*/}
-        {/*                 th:if="${report.getDeclineReason() != null and report.getStatus().name().equals('NOT_ACCEPTED')}"*/}
-        {/*                 th:text="#{string.reason.toggle} + ${report.getDeclineReason()}"></div>*/}
-        {/*        </div>*/}
-        {/*        </td>*/}
-        {/*</tr>*/}
-                </tbody>
-            </table>
-            <a href="/userHome/add">
-                <button type="button" className="btn btn-outline-success btn-lg">
-                    Add
-                </button>
-            </a>
+    const columns = [{
+        dataField: 'id',
+        text: 'ID'
+    }, {
+        dataField: 'name',
+        text: 'Name'
+    }, {
+        dataField: 'status',
+        text: 'Status',
+        formatter: (cell, row) => StatusSwitch(row.status)
+    }, {
+        dataField: 'created',
+        text: 'Created',
+        formatter: (cell, row) => Date(row.created)
+    }, {
+        dataField: 'updated',
+        text: 'Updated',
+        formatter: (cell, row) => Date(row.updated)
+    }, {
+        dataField: 'changeInspector',
+        formatter: (cell, row) => ChangeButton(row.status)
+    }, {
+        dataField: 'correct',
+        formatter: (cell, row) => CorrectButton(row.status)
+    }];
 
-        {/*    <nav th:if="${reports.getTotalPages() != 0}" style="display: flex; justify-content: center"*/}
-        {/*         aria-label="Page navigation example">*/}
-        {/*        <ul className="pagination">*/}
-        {/*<span th:each="page: ${#numbers.sequence(0, reports.getTotalPages() - 1)}">*/}
-        {/*    <li className="page-item"><a className="page-link" th:href="'?page=' + ${page}"*/}
-        {/*                                 th:text="${page + 1}"></a></li>*/}
-        {/*</span>*/}
-        {/*        </ul>*/}
-        {/*    </nav>*/}
+
+    return (
+        <div className="content" style={{width: '100%'}}>
+            <div className='contentTable'>
+                <BootstrapTable
+                    columns={columns}
+                    data={report}
+                    keyField='id'
+                    hover
+                    bordered={false}
+                    bootstrap4
+                    expandRow={expandRow}
+                />
+
+                <a href="/userHome/add">
+                    <button type="button" className="btn btn-outline-success btn-lg">
+                        Add new Report
+                    </button>
+                </a>
+            </div>
         </div>
+
     )
 }
