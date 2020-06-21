@@ -8,10 +8,8 @@ import {StatusSwitch, CorrectButton, ChangeButton, Date} from '../UI/HomeElement
 
 
 export const UserHome = (props) => {
-
-    const authToken = props.authToken;
-    console.log(authToken);
-
+    const authToken = localStorage.getItem("token");
+    const [report, setReport] = useState([]);
     useEffect(() => {
         const authorize = () => {
             const data = '';
@@ -31,54 +29,30 @@ export const UserHome = (props) => {
             axios(config)
                 .then(function (response) {
                     console.log(JSON.stringify(response.data));
+                    setReport(response.data);
                 })
                 .catch(function (error) {
                     console.log(error);
+                    //todo: only for testing
+                    setReport([
+                        {
+                            "id": "1",
+                            "name": "name",
+                            "description": "desc",
+                            "status": "NOT_ACCEPTED",
+                            "created": "2020-02-02",
+                            "updated": "2020-02-02",
+                            "declineReason": "ne pravilna"
+                        }
+                    ])
                 });
         }
 
-        if (authToken) {
+        if (authToken || true) {
             authorize();
         }
-    });
+    }, [authToken]);
     console.log("render")
-//tak reporti budut prihodit s backenda
-    const report = [
-        {
-            "id": "1",
-            "name": "name",
-            "description": "desc",
-            "status": "NOT_ACCEPTED",
-            "created": [
-                2020,
-                6,
-                10
-            ],
-            "updated": [
-                2020,
-                6,
-                10
-            ],
-            "declineReason": "ne pravilna"
-        },
-        {
-            "id": "2",
-            "name": "name2",
-            "description": "desc2",
-            "status": "ACCEPTED",
-            "created": [
-                2020,
-                6,
-                10
-            ],
-            "updated": [
-                2020,
-                6,
-                10
-            ],
-            "declineReason": "ne pravilna2"
-        }
-    ]
 
     const expandRow = {
         renderer: (row, rowIndex) => {
@@ -118,11 +92,9 @@ export const UserHome = (props) => {
     }, {
         dataField: 'created',
         text: 'Created',
-        formatter: (cell, row) => Date(row.created)
     }, {
         dataField: 'updated',
         text: 'Updated',
-        formatter: (cell, row) => Date(row.updated)
     }, {
         dataField: 'changeInspector',
         formatter: (cell, row) => ChangeButton(row.status)

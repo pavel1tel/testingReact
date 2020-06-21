@@ -10,7 +10,6 @@ export const LoginForm = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [emailError, setEmailError] = useState('');
-    const setAuthToken = props.setAuthToken;
     const handleChange = (emailOrPassword) => (event) => {
         event.preventDefault();
         const targetValue = event.target.value;
@@ -21,7 +20,6 @@ export const LoginForm = (props) => {
             setPassword(targetValue);
         }
     }
-
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -45,7 +43,7 @@ export const LoginForm = (props) => {
             .then(res => {
                 console.log(JSON.stringify(res.data));
                 const token = res.data.access_token;
-                setAuthToken(token);
+                localStorage.setItem("token", token)
             })
             .catch(err => console.log(err));
     }
