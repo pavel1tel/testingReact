@@ -55,3 +55,7 @@ export const Reason = (status, declineReason) => {
         return (<span></span>);
     }
 }
+
+export const Date = (date) => {
+    return ( <span>{date[1] + "-" + date[2] + "-" + date[0]}</span> )
+}

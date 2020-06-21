@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import "./userHome.css";
 import BootstrapTable from 'react-bootstrap-table-next';
 import TableHeaderColumn from 'react-bootstrap-table-next';
 import BootstrapButton from 'react-bootstrap-table-next';
-import {StatusSwitch, CorrectButton, ChangeButton, Reason} from '../UI/HomeElements';
+import {StatusSwitch, CorrectButton, ChangeButton, Date} from '../UI/HomeElements';
 
 export const UserHome = () => {
 
-   useEffect(() => {
+    useEffect(() => {
         var data = '';
         console.log("fetching")
         var config = {
@@ -26,66 +27,112 @@ export const UserHome = () => {
             .catch(err => console.log(err));
     });
 
-    const report = {
-        "id" : 1,
-        "name" : "testName",
-        "description" : "testDescription",
-        "updated" : "2020-05-25",
-        "created" : "2020-05-25",
-        "status" : "NOT_ACCEPTED",
-        "declineReason" : "reason"
-    }
+    //tak reporti budut prihodit s backenda
+    const report = [
+        {
+            "id": "1",
+            "name": "name",
+            "description": "desc",
+            "status": "NOT_ACCEPTED",
+            "created": [
+                2020,
+                6,
+                10
+            ],
+            "updated": [
+                2020,
+                6,
+                10
+            ],
+            "declineReason": "ne pravilna"
+        },
+        {
+            "id": "2",
+            "name": "name2",
+            "description": "desc2",
+            "status": "ACCEPTED",
+            "created": [
+                2020,
+                6,
+                10
+            ],
+            "updated": [
+                2020,
+                6,
+                10
+            ],
+            "declineReason": "ne pravilna2"
+        }
+    ]
 
     const expandRow = {
-      renderer: (row, rowIndex) => (
-        <div>
-          <p>{ `Description ${row.description}` }</p>
-        </div>
-      )
+        renderer: (row, rowIndex) => {
+            if (row.declineReason !== "null" && row.status === "NOT_ACCEPTED") {
+                return (
+                    <span>
+                        <div style={{background: "#F5F5F5", margin: 0, padding: 5}}>
+                            {`Description ${row.description}`}
+                        </div>
+                        <div id="reason">
+                            {"Reason: " + row.declineReason}
+                        </div>
+                    </span>
+                )
+            } else {
+                return (
+                    <span>
+                        <div style={{background: "#F5F5F5", margin: 0, padding: 5}}>
+                            {`Description ${row.description}`}
+                        </div>
+                    </span>
+                )
+            }
+        }
     };
 
     const columns = [{
-      dataField: 'id',
-      text: 'ID'
+        dataField: 'id',
+        text: 'ID'
     }, {
-      dataField: 'name',
-      text: 'Name'
+        dataField: 'name',
+        text: 'Name'
     }, {
-      dataField: 'status',
-      text: 'Status',
-      formatter: (cell, row) => StatusSwitch(row.status)
+        dataField: 'status',
+        text: 'Status',
+        formatter: (cell, row) => StatusSwitch(row.status)
     }, {
-      dataField: 'created',
-      text: 'Created'
+        dataField: 'created',
+        text: 'Created',
+        formatter: (cell, row) => Date(row.created)
     }, {
-      dataField: 'updated',
-      text: 'Updated'
+        dataField: 'updated',
+        text: 'Updated',
+        formatter: (cell, row) => Date(row.updated)
     }, {
-      dataField: 'changeInspector',
-      formatter: (cell, row) => ChangeButton(row.status)
+        dataField: 'changeInspector',
+        formatter: (cell, row) => ChangeButton(row.status)
     }, {
-      dataField: 'correct',
-      formatter: (cell, row) => CorrectButton(row.status)
+        dataField: 'correct',
+        formatter: (cell, row) => CorrectButton(row.status)
     }];
 
 
-    return(
-        <div className="content" style={{ width: '100%' }}>
-            <div className='contentTable' style={{  margin: '2%' }}>
-                <BootstrapTable 
+    return (
+        <div className="content" style={{width: '100%'}}>
+            <div className='contentTable'>
+                <BootstrapTable
                     columns={columns}
-                    data={ [report] } 
+                    data={report}
                     keyField='id'
-                    striped
                     hover
-                    bordered={ false }
+                    bordered={false}
                     bootstrap4
-                    expandRow={ expandRow }
+                    expandRow={expandRow}
                 />
 
                 <a href="/userHome/add">
                     <button type="button" className="btn btn-outline-success btn-lg">
-                        Add
+                        Add new Report
                     </button>
                 </a>
             </div>
