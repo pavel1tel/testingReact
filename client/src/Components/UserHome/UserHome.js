@@ -2,14 +2,14 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import "./userHome.css";
 import BootstrapTable from 'react-bootstrap-table-next';
-import TableHeaderColumn from 'react-bootstrap-table-next';
-import BootstrapButton from 'react-bootstrap-table-next';
+import {Redirect} from "react-router-dom";
 import {StatusSwitch, CorrectButton, ChangeButton, Date} from '../UI/HomeElements';
 
 
 export const UserHome = (props) => {
     const authToken = localStorage.getItem("token");
     const [report, setReport] = useState([]);
+    const [cantFetch, setCantFetch] = useState(false);
     useEffect(() => {
         const authorize = () => {
             const data = '';
@@ -33,6 +33,7 @@ export const UserHome = (props) => {
                 })
                 .catch(function (error) {
                     console.log(error);
+                    setCantFetch(true);
                     //todo: only for testing
                     setReport([
                         {
@@ -103,27 +104,31 @@ export const UserHome = (props) => {
         formatter: (cell, row) => CorrectButton(row.status)
     }];
 
+    if(!authToken) {
+        return <Redirect to='/accounts/login'/>
+    } else if (cantFetch) {
+        return <Redirect to='/error'/>
+    } else {
+        return (
+            <div className="content" style={{width: '100%'}}>
+                <div className='contentTable'>
+                    <BootstrapTable
+                        columns={columns}
+                        data={report}
+                        keyField='id'
+                        hover
+                        bordered={false}
+                        bootstrap4
+                        expandRow={expandRow}
+                    />
 
-    return (
-        <div className="content" style={{width: '100%'}}>
-            <div className='contentTable'>
-                <BootstrapTable
-                    columns={columns}
-                    data={report}
-                    keyField='id'
-                    hover
-                    bordered={false}
-                    bootstrap4
-                    expandRow={expandRow}
-                />
-
-                <a href="/userHome/add">
-                    <button type="button" className="btn btn-outline-success btn-lg">
-                        Add new Report
-                    </button>
-                </a>
+                    <a href="/userHome/add">
+                        <button type="button" className="btn btn-outline-success btn-lg">
+                            Add new Report
+                        </button>
+                    </a>
+                </div>
             </div>
-        </div>
-
-    )
+        )
+    }
 }

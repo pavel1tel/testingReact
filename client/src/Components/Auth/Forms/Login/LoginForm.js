@@ -3,6 +3,7 @@ import { validateLoginForm } from '../Helpers/FormValidators';
 import "../Forms.css";
 import axios from 'axios';
 import qs from 'qs';
+import {Redirect} from "react-router-dom";
 import ReactIsCapsLockActive from '@matsun/reactiscapslockactive';
 
 
@@ -10,6 +11,7 @@ export const LoginForm = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [emailError, setEmailError] = useState('');
+    const [redirect, setRedirect] = useState(false);
     const handleChange = (emailOrPassword) => (event) => {
         event.preventDefault();
         const targetValue = event.target.value;
@@ -41,7 +43,7 @@ export const LoginForm = (props) => {
 
         axios(config)
             .then(res => {
-                console.log(JSON.stringify(res.data));
+                setRedirect(true);
                 const token = res.data.access_token;
                 localStorage.setItem("token", token)
             })
@@ -56,83 +58,88 @@ export const LoginForm = (props) => {
         }
     }, [email])
 
-    return (
-        <div id="LoginForm" className="Form">
-            <form onSubmit={handleSubmit} method="post">
-                <h2 className="text-center">
-                    Login
-                </h2>
-                <div className="form-group">
-                    <input 
-                        name="email" 
-                        id="email" 
-                        type="email" 
-                        className="form-control"
-                        placeholder="email"
-                        required="required"
-                        value={email}
-                        onChange={handleChange('email')}
-                    />
-                    {email && (
-                        <div className="error">
-                            <span >{emailError}</span>
-                        </div>
-                        )
-                    }
-                </div>
-                <div className="form-group">
-                    <input 
-                        type="password" 
-                        name="password" 
-                        id="password" 
-                        className="form-control"
-                        placeholder="password"
-                        required="required"
-                        value={password}
-                        onChange={handleChange('password')}
-                    />
-                </div>
-                <div className="form-group">
-                    <ReactIsCapsLockActive>
-                        {active => (password || email) && active && <span className="capslock">note: Capslock is active </span>}
-                    </ReactIsCapsLockActive>
-                </div>
-                <div className="form-group">
-                    <button 
-                        type="submit" 
-                        className="btn btn-primary btn-block"
-                    >
-                        Sing In
-                    </button>
-                </div>
-                <div className="clearfix">
-                    <label className="pull-left checkbox-inline">
-                        <input 
-                            type="checkbox" 
-                            name="remember-me" 
-                            value={"remember me"}
+    if(redirect){
+        return(<Redirect to='/' />);
+    } else {
+        return (
+            <div id="LoginForm" className="Form">
+                <form onSubmit={handleSubmit} method="post">
+                    <h2 className="text-center">
+                        Login
+                    </h2>
+                    <div className="form-group">
+                        <input
+                            name="email"
+                            id="email"
+                            type="email"
+                            className="form-control"
+                            placeholder="email"
+                            required="required"
+                            value={email}
+                            onChange={handleChange('email')}
                         />
-                    </label>
-                    <a href="#" className="pull-right">
-                        forgot password
+                        {email && (
+                            <div className="error">
+                                <span>{emailError}</span>
+                            </div>
+                        )
+                        }
+                    </div>
+                    <div className="form-group">
+                        <input
+                            type="password"
+                            name="password"
+                            id="password"
+                            className="form-control"
+                            placeholder="password"
+                            required="required"
+                            value={password}
+                            onChange={handleChange('password')}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <ReactIsCapsLockActive>
+                            {active => (password || email) && active &&
+                                <span className="capslock">note: Capslock is active </span>}
+                        </ReactIsCapsLockActive>
+                    </div>
+                    <div className="form-group">
+                        <button
+                            type="submit"
+                            className="btn btn-primary btn-block"
+                        >
+                            Sing In
+                        </button>
+                    </div>
+                    <div className="clearfix">
+                        <label className="pull-left checkbox-inline">
+                            <input
+                                type="checkbox"
+                                name="remember-me"
+                                value={"remember me"}
+                            />
+                        </label>
+                        <a href="#" className="pull-right">
+                            forgot password
+                        </a>
+                    </div>
+                    {/*<div style="display: flex; align-items: center; justify-content: center">*/}
+                    {/*    <p className="error" th:if="${param.error}"*/}
+                    {/*       th:text="#{string.login.invalid.username.password}"></p>*/}
+                    {/*    <p id="logout" className="FadeIn fifth" th:if="${param.logout}"*/}
+                    {/*       th:text="#{string.login.user.been.logged.out}"></p>*/}
+                    {/*</div>*/}
+                </form>
+                <p className="text-center">
+                    <a href="/accounts/registration">
+                        create an account
                     </a>
-                </div>
-                {/*<div style="display: flex; align-items: center; justify-content: center">*/}
-                {/*    <p className="error" th:if="${param.error}"*/}
-                {/*       th:text="#{string.login.invalid.username.password}"></p>*/}
-                {/*    <p id="logout" className="FadeIn fifth" th:if="${param.logout}"*/}
-                {/*       th:text="#{string.login.user.been.logged.out}"></p>*/}
-                {/*</div>*/}
-            </form>
-            <p className="text-center">
-                <a href="/accounts/registration"> 
-                    create an account 
-                </a>
-            </p>
-            {/*<ul style="display: flex; align-items: center; justify-content: center" id="lang">*/}
-            {/*    <li><a className="underlineHover" href="?lang=en"></a></li>*/}
-            {/*    <li><a className="underlineHover" href="?lang=ua" th:text="UA"></a></li>*/}
-            {/*</ul>*/}
-        </div>
-    );
+                </p>
+                {/*<ul style="display: flex; align-items: center; justify-content: center" id="lang">*/}
+                {/*    <li><a className="underlineHover" href="?lang=en"></a></li>*/}
+                {/*    <li><a className="underlineHover" href="?lang=ua" th:text="UA"></a></li>*/}
+                {/*</ul>*/}
+            </div>
+        );
+    }
 }

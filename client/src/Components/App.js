@@ -10,6 +10,7 @@ import {
     Switch,
     Route,
 } from "react-router-dom";
+import {Error403} from "./Errors/Error403";
 
 
 export const AppComponent = (props) => {
@@ -21,6 +22,7 @@ export const AppComponent = (props) => {
 
               <Switch>
                   <Route exact path='/' component={VariantText} />
+                  <Route exact path='/error' component={Error403} />
                   <Route 
                       path='/accounts' 
                       render={(props) => <Auth {...props} setAuthToken={setAuthToken} />}
