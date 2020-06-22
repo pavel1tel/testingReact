@@ -46,6 +46,25 @@ export const LoginForm = (props) => {
                 setRedirect(true);
                 const token = res.data.access_token;
                 localStorage.setItem("token", token)
+                let data = '';
+
+                let config = {
+                    method: 'get',
+                    url: 'http://localhost:4321/accounts/current',
+                    headers: {
+                        'Authorization': 'Bearer ' + res.data.access_token,
+                    },
+                    data : data
+                };
+
+                axios(config)
+                    .then(function (response) {
+                        console.log(response.data);
+                        localStorage.setItem('user', JSON.stringify(response.data))
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             })
             .catch(err => console.log(err));
     }

@@ -30,8 +30,8 @@ public class AccountController {
 
     @PreAuthorize("#oauth2.hasScope('server')")
     @GetMapping("/current")
-    public Principal getCurrentUser(Principal principal){
-        return principal;
+    public User getCurrentUser(Principal principal){
+        return userService.getByEmail(principal.getName());
     }
 
     @PreAuthorize("#oauth2.hasScope('server') and hasAuthority('ROLE_INSPECTOR')")
