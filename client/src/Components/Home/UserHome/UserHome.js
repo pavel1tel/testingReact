@@ -3,19 +3,16 @@ import axios from 'axios';
 import "./userHome.css";
 import BootstrapTable from 'react-bootstrap-table-next';
 import {Redirect} from "react-router-dom";
-import {StatusSwitch, CorrectButton, ChangeButton, Date} from '../UI/HomeElements';
+import {StatusSwitch, CorrectButton, ChangeButton, Date} from '../../UI/HomeElements';
 
 
 export const UserHome = (props) => {
-    const authToken = localStorage.getItem("token");
     const [report, setReport] = useState([]);
     const [cantFetch, setCantFetch] = useState(false);
+    const authToken = localStorage.getItem("token");
     useEffect(() => {
         const authorize = () => {
             const data = '';
-
-            console.log("fetching")
-            console.log(authToken)
 
             const config = {
                 method: 'get',
@@ -49,10 +46,8 @@ export const UserHome = (props) => {
                 });
         }
 
-        if (authToken || true) {
-            authorize();
-        }
-    }, [authToken]);
+        authorize();
+    });
     console.log("render")
 
     const expandRow = {
@@ -104,9 +99,7 @@ export const UserHome = (props) => {
         formatter: (cell, row) => CorrectButton(row.status)
     }];
 
-    if(!authToken) {
-        return <Redirect to='/accounts/login'/>
-    } else if (cantFetch) {
+    if (cantFetch) {
         return <Redirect to='/error'/>
     } else {
         return (
