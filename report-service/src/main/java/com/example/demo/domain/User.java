@@ -2,6 +2,8 @@ package com.example.demo.domain;
 
 import com.example.demo.domain.enums.Role;
 import com.example.demo.domain.enums.Status;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -28,9 +30,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private List<Report> reportsOwned;
 
+    @JsonBackReference
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "inspectors")
     private List<Report> reportsInspected;
 

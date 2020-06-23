@@ -98,7 +98,7 @@ export const UserHome = (props) => {
         formatter: (cell, row) => ChangeButton(row)
     }, {
         dataField: 'correct',
-        formatter: (cell, row) => CorrectButton(row.status)
+        formatter: (cell, row) => CorrectButton(row)
     }];
 
     if (cantFetch) {

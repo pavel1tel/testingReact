@@ -4,6 +4,7 @@ import React from "react";
 import {UserHome} from "./UserHome";
 import {Route, Switch, useRouteMatch} from "react-router-dom";
 import {AddReport} from "./addReport";
+import {UpdateReport} from "./Update";
 
 export const RouteUserHome = () => {
     const { path, url } = useRouteMatch();
@@ -12,6 +13,7 @@ export const RouteUserHome = () => {
             <Switch>
                 <Route exact path={`${path}/add`} component={AddReport}/>
                 <Route exact path={`${path}/`} component={UserHome}/>
+                <Route path={`${path}/update/:id`} children={<UpdateReport />} />
             </Switch>
         </div>
     );

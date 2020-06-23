@@ -63,6 +63,7 @@ public class UserHomeController {
         return "success";
     }
 
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping(value = "/update/{report_id}")
     public Report updateReport(@PathVariable String report_id, Principal principal)
             throws UnknownReportError, UnknownUserException {
@@ -76,6 +77,7 @@ public class UserHomeController {
         return report;
     }
 
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping(value = "/update/{report_id}")
     public String updateReportPost(@RequestBody ReportDTO reportToUpdate, @PathVariable String report_id, Principal principal)
             throws UnknownReportError, UnknownUserException {

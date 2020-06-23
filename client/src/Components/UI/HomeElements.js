@@ -1,6 +1,7 @@
 import React from 'react';
 import './UI.css';
 import axios from 'axios';
+import {Link} from "react-router-dom";
 
 
 export const StatusSwitch = (status) => {
@@ -21,14 +22,12 @@ export const StatusSwitch = (status) => {
 }
 
 
-export const CorrectButton = (status) => {
-    if (status === "NOT_ACCEPTED") {
+export const CorrectButton = (row) => {
+    if (row.status === "NOT_ACCEPTED") {
         return (
-            <form>
-                <button type="submit" className="btn btn-warning"
-                        onClick={() => alert('You sure?')}>Correct
+                <button className="btn btn-warning">
+                    <Link to={"/home/user/update/" + row.id}>Correct</Link>
                 </button>
-            </form>
         )
     }
 }
@@ -62,7 +61,6 @@ const changeInspector = (row) => {
 
         axios(config)
             .then(function (response) {
-                console.log(response.data);
                 if(response.data === "no insp"){
                     alert("No inspectors available");
                 }

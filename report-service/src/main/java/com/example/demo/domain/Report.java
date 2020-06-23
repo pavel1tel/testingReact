@@ -38,6 +38,7 @@ public class Report {
     @ManyToOne
     private User owner;
 
+    @JsonBackReference
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "report_inspectors",
             joinColumns = {@JoinColumn(name = "report_id")},
@@ -56,6 +57,7 @@ public class Report {
     @Column(name = "decline_reason", columnDefinition = "TEXT")
     private String declineReason;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "report")
     private List<Archive> archives;
 }
