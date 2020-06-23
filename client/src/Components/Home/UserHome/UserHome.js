@@ -10,7 +10,7 @@ import {StatusSwitch, CorrectButton, ChangeButton, Date} from '../../UI/HomeElem
 export const UserHome = (props) => {
     const [report, setReport] = useState([]);
     const [cantFetch, setCantFetch] = useState(false);
-    const authToken = localStorage.getItem("token");
+    const authToken = useState(localStorage.getItem("token"));
     useEffect(() => {
         const authorize = () => {
             const data = '';
@@ -46,8 +46,9 @@ export const UserHome = (props) => {
                     ])
                 });
         }
-
-        authorize();
+        if (authToken) {
+            authorize();
+        }
     });
     console.log("render")
 
@@ -94,7 +95,7 @@ export const UserHome = (props) => {
         text: 'Updated',
     }, {
         dataField: 'changeInspector',
-        formatter: (cell, row) => ChangeButton(row.status)
+        formatter: (cell, row) => ChangeButton(row)
     }, {
         dataField: 'correct',
         formatter: (cell, row) => CorrectButton(row.status)

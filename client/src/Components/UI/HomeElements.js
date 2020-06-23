@@ -1,5 +1,6 @@
 import React from 'react';
 import './UI.css';
+import axios from 'axios';
 
 
 export const StatusSwitch = (status) => {
@@ -32,15 +33,44 @@ export const CorrectButton = (status) => {
     }
 }
 
-export const ChangeButton = (status) => {
-    if (status === "NOT_ACCEPTED") {
+export const ChangeButton = (row) => {
+    if (row.status === "NOT_ACCEPTED") {
         return (
-            <form>
-                <button type="submit" className="btn btn-danger"
-                        onClick={() => alert('You sure?')}>Change Inspector
+                <button className="btn btn-danger"
+                        onClick={() => changeInspector(row)}>
+                    Change Inspector
                 </button>
-            </form>
         )
+    }
+}
+
+const changeInspector = (row) => {
+    const authToken = localStorage.getItem("token");
+    if (window.confirm(`Are you sure?`)){
+        let data = "";
+
+        let config = {
+            method: 'post',
+            url: 'http://localhost:4321/report/user/change/' + row.id,
+            headers: {
+                'Authorization': 'Bearer ' + authToken,
+                'Content-Type': 'application/json',
+                'Cookie': 'JSESSIONID=0F79A812E5B03983E77357B97909D8F6'
+            },
+            data : data
+        };
+
+        axios(config)
+            .then(function (response) {
+                console.log(response.data);
+                if(response.data === "no insp"){
+                    alert("No inspectors available");
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
     }
 }
 

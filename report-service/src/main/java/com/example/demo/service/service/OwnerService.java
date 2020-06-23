@@ -43,6 +43,9 @@ public class OwnerService {
         List<User> newInspectors = inspectors.stream()
                 .filter(inspector -> !inspector.getId().equals(inspectorId))
                 .collect(Collectors.toList());
+        if (newInspectors.size() == 0) {
+           throw new RuntimeException();
+        }
         report.setStatus(ReportStatus.QUEUE);
         report.setInspectors(getRandomElements(newInspectors));
         reportsRepository.save(report);

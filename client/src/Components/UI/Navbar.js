@@ -28,6 +28,33 @@ export const Navbar = (props) => {
         }
     });
 
+    const HomeLink = () => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user) {
+            if(user.role === "ROLE_USER") {
+                return (
+                    <span>
+                        <li className="nav-item active">
+                            <Link to="/home/user" className="nav-link">Home</Link>
+                        </li>
+                    </span>
+                )
+            } else {
+                return (
+                    <span>
+                        <li className="nav-item active">
+                            <Link to="home/insp" className="nav-link">Home</Link>
+                        </li>
+                    </span>
+                )
+            }
+        } else {
+            return (
+                <span></span>
+            )
+        }
+    }
+
 
     const handleLogout = () => {
         localStorage.clear();
@@ -48,13 +75,7 @@ export const Navbar = (props) => {
             <span key={key}></span>
             <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
                 <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-                    {authToken &&
-                    <span>
-                                 <li className="nav-item active">
-                                     <a className="nav-link">Home</a>
-                                 </li>
-                            </span>
-                    }
+                    {authToken && <HomeLink /> }
                 </ul>
                 <div className="form-inline my-2 my-lg-0">
                     {authorized ? (

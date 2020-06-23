@@ -100,7 +100,11 @@ public class UserHomeController {
             log.warn("user is not allowed to change inspector of this report");
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "unable to change inspector");
         }
-        ownerService.changeInspector(reportToUpdate);
+        try {
+            ownerService.changeInspector(reportToUpdate);
+        } catch (RuntimeException exception) {
+            return "no insp";
+        }
         return "success";
     }
 }
