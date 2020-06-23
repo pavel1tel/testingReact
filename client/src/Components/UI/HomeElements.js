@@ -14,7 +14,7 @@ export const StatusSwitch = (status) => {
             )
         case "QUEUE":
             return (
-                <span className="font-weight-bold">Queue</span>
+                <span id="queue" className="font-weight-bold">Queue</span>
             )
     }
 }

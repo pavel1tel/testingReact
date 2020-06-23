@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import "./userHome.css";
+import {Link} from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
 import {Redirect} from "react-router-dom";
 import {StatusSwitch, CorrectButton, ChangeButton, Date} from '../../UI/HomeElements';
@@ -115,11 +116,11 @@ export const UserHome = (props) => {
                         expandRow={expandRow}
                     />
 
-                    <a href="/userHome/add">
+                    <Link to="/home/user/add">
                         <button type="button" className="btn btn-outline-success btn-lg">
                             Add new Report
                         </button>
-                    </a>
+                    </Link>
                 </div>
             </div>
         )

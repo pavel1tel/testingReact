@@ -2,6 +2,15 @@ spring:
   rabbitmq:
     host: rabbitmq
 
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 80000
+
 eureka:
   instance:
     prefer-ip-address: true
