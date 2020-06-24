@@ -1,6 +1,7 @@
 import React from "react";
 import {Route, Switch, useRouteMatch, Redirect} from "react-router-dom";
 import {RouteUserHome} from "./UserHome";
+import {RouteInspHome} from "./InspHome";
 
 export const Home = () => {
     const { path, url } = useRouteMatch();
@@ -11,7 +12,8 @@ export const Home = () => {
         return (
             <div className='Auth-root'>
                 <Switch>
-                    <Route path={`${path}/user`} component={RouteUserHome}/>
+                    <Route exact path={`${path}/user`} component={RouteUserHome}/>
+                    <Route exact path={`${path}/insp`} component={RouteInspHome}/>
                 </Switch>
             </div>
         );

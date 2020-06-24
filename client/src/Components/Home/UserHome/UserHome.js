@@ -49,7 +49,7 @@ export const UserHome = (props) => {
         if (authToken) {
             authorize();
         }
-    });
+    }, []);
     console.log("render")
 
     const expandRow = {

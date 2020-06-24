@@ -91,11 +91,11 @@ public class InspHomeController {
         if (inspector.getReportsInspected().stream().noneMatch(report -> report.getId().equals(reportToAccept.getId()))
                 || !reportToAccept.getStatus().equals(ReportStatus.QUEUE)) {
             log.warn("inspector is not allowed to accept this report");
-            return "redirect:/error";
+            return "error";
         }
         reportToAccept.setStatus(ReportStatus.ACCEPTED);
         reportToAccept.setInspectors(new ArrayList<>());
         inspectorService.acceptReport(reportToAccept, inspector);
-        return "redirect:/inspHome";
+        return "success";
     }
 }

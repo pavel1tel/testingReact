@@ -87,3 +87,67 @@ export const Reason = (status, declineReason) => {
 export const Date = (date) => {
     return ( <span>{date[1] + "-" + date[2] + "-" + date[0]}</span> )
 }
+
+export const AcceptBtn = (row) => {
+    return (
+        <form onSubmit={(event) => accept(event, row)}>
+            <button type="submit" className="btn btn-success">Accept</button>
+        </form>
+    )
+}
+
+const accept = (event, row) => {
+    const authToken = localStorage.getItem("token");
+    let data = "";
+
+    let config = {
+        method: 'post',
+        url: 'http://localhost:4321/report/insp/accept/' + row.id,
+        headers: {
+            'Authorization': 'Bearer ' + authToken,
+            'Content-Type': 'application/json'
+        },
+        data : data
+    };
+
+    axios(config)
+        .then(function (response) {
+            console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+}
+
+export const DeclineBtn =(row) => {
+    return (
+        <form onSubmit={(event => decline(event, row))}>
+            <button type="submit" className="btn btn-danger">Decline</button>
+        </form>
+    )
+}
+
+const decline = (event, row) => {
+    const authToken = localStorage.getItem("token");
+    const reason = window.prompt("Enter a reason")
+    let data = JSON.stringify({"declineReason": reason});
+
+    let config = {
+        method: 'post',
+        url: 'http://localhost:4321/report/insp/decline/' + row.id,
+        headers: {
+            'Authorization': 'Bearer ' + authToken,
+            'Content-Type': 'application/json'
+        },
+        data : data
+    };
+
+    axios(config)
+        .then(function (response) {
+            console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
