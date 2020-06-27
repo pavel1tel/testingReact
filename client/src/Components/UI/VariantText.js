@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const VariantText = (props) => {
+export const VariantText = () => {
 
     return (
         <div className="content" style={{marginLeft: '2rem'}}>

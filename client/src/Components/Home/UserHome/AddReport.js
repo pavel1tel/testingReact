@@ -1,34 +1,26 @@
 import React, {useState} from "react";
 import axios from 'axios';
 import {Redirect} from "react-router-dom";
+import {homeAddReportConfig} from '../Config';
 
-export const  AddReport = () => {
 
-    const authToken = localStorage.getItem('token')
+export const  AddReport = ({token}) => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [submitted, setSubmit] = useState(false)
+    const [submitted, setSubmit] = useState(false);
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        let data = JSON.stringify({"name":name,"description":description});
 
-        let config = {
-            method: 'post',
-            url: 'http://localhost:4321/report/user/add',
-            headers: {
-                'Authorization': 'Bearer ' + authToken,
-                'Content-Type': 'application/json',
-                'Cookie': 'JSESSIONID=A15BA114CD379304461B4AF738691CC0'
-            },
-            data : data
-        };
+        const config = homeAddReportConfig(name, description, token);
+
         axios(config)
-            .then(function (response) {
-                console.log(JSON.stringify(response.data));
-                setSubmit(true)
+            .then((res) => {
+                console.log(JSON.stringify(res.data));
+                setSubmit(true);
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch((err) => {
+                console.log(err);
             });
     }
 
@@ -53,14 +45,16 @@ export const  AddReport = () => {
                         <label htmlFor="name">Name</label>
                         <input onChange={handleChange("name")} value={name} name="name" type="text" required
                                className="form-control" id="name"
-                               aria-describedby="username" placeholder="Name"></input>
+                               aria-describedby="username" placeholder="Name">
+                        </input>
                     </div>
                     <div className="form-group">
                         <label htmlFor="description">Description</label>
                         <input onChange={handleChange("description")} value={description} name="description" type="text"
                                required className="form-control"
                                aria-describedby="description"
-                               placeholder="Description" id="description"></input>
+                               placeholder="Description" id="description">
+                        </input>
                     </div>
                     <button type="submit" className="btn btn-primary">Submit</button>
                 </form>

@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { validateLoginForm } from '../Helpers/FormValidators';
 import "../Forms.css";
 import axios from 'axios';
-import qs from 'qs';
 import {Redirect} from "react-router-dom";
 import ReactIsCapsLockActive from '@matsun/reactiscapslockactive';
+import {loginAuthorizationConfig, loginGetUsernameConfig} from '../Config';
 
 
-export const LoginForm = (props) => {
+export const LoginFormComponent = ({loggedIn, setToken, onLogIn}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [emailError, setEmailError] = useState('');
-    const [redirect, setRedirect] = useState(false);
+
     const handleChange = (emailOrPassword) => (event) => {
         event.preventDefault();
         const targetValue = event.target.value;
@@ -22,49 +22,25 @@ export const LoginForm = (props) => {
             setPassword(targetValue);
         }
     }
+
     const handleSubmit = (event) => {
         event.preventDefault();
-
-        const data = qs.stringify({
-            'grant_type': 'password',
-            'username': email,
-            password,
-        });
-
-        const config = {
-            method: 'post',
-            url: 'http://localhost:4321/auth/oauth/token',
-            headers: {
-                'Authorization': 'Basic c2VydmVyOnNlY3JldA==',
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            data,
-        };
+        const config = loginAuthorizationConfig(email, password);
 
         axios(config)
             .then(res => {
-                setRedirect(true);
                 const token = res.data.access_token;
-                localStorage.setItem("token", token)
-                let data = '';
+                setToken(token);
+                // localStorage.setItem("token", token);
 
-                let config = {
-                    method: 'get',
-                    url: 'http://localhost:4321/accounts/current',
-                    headers: {
-                        'Authorization': 'Bearer ' + res.data.access_token,
-                    },
-                    data : data
-                };
+                const config = loginGetUsernameConfig(token);
 
                 axios(config)
-                    .then(function (response) {
-                        console.log(response.data);
-                        localStorage.setItem('user', JSON.stringify(response.data))
+                    .then((res) => {
+                        const username = res.data;
+                        onLogIn(username);
+                        // localStorage.setItem('user', JSON.stringify(response.data))
                     })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
             })
             .catch(err => console.log(err));
     }
@@ -77,8 +53,10 @@ export const LoginForm = (props) => {
         }
     }, [email])
 
-    if(redirect){
-        return(<Redirect to='/' />);
+    if (loggedIn) {
+        return (
+            <Redirect to='/' />
+        );
     } else {
         return (
             <div id="LoginForm" className="Form">
@@ -101,8 +79,7 @@ export const LoginForm = (props) => {
                             <div className="error">
                                 <span>{emailError}</span>
                             </div>
-                        )
-                        }
+                        )}
                     </div>
                     <div className="form-group">
                         <input
@@ -142,22 +119,12 @@ export const LoginForm = (props) => {
                             forgot password
                         </a>
                     </div>
-                    {/*<div style="display: flex; align-items: center; justify-content: center">*/}
-                    {/*    <p className="error" th:if="${param.error}"*/}
-                    {/*       th:text="#{string.login.invalid.username.password}"></p>*/}
-                    {/*    <p id="logout" className="FadeIn fifth" th:if="${param.logout}"*/}
-                    {/*       th:text="#{string.login.user.been.logged.out}"></p>*/}
-                    {/*</div>*/}
                 </form>
                 <p className="text-center">
                     <a href="/accounts/registration">
                         create an account
                     </a>
                 </p>
-                {/*<ul style="display: flex; align-items: center; justify-content: center" id="lang">*/}
-                {/*    <li><a className="underlineHover" href="?lang=en"></a></li>*/}
-                {/*    <li><a className="underlineHover" href="?lang=ua" th:text="UA"></a></li>*/}
-                {/*</ul>*/}
             </div>
         );
     }
