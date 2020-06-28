@@ -3,28 +3,35 @@ import {AcceptBtn, ChangeButton, CorrectButton, DeclineBtn, StatusSwitch} from "
 import BootstrapTable from 'react-bootstrap-table-next';
 import {Link} from "react-router-dom";
 import axios from "axios";
-import {homeGetReportsConfig} from '../Config';
 
+export const InspHome = () => {
 
-export const InspHome = ({token}) => {
     const [report, setReport] = useState([]);
     const [cantFetch, setCantFetch] = useState(false);
-
+    const authToken = useState(localStorage.getItem("token"));
     const [update, setUpdate] = useState(false);
 
     useEffect(() => {
         const authorize = () => {
-            const config = homeGetReportsConfig('insp')(token);
+            const data = '';
+
+            const config = {
+                method: 'get',
+                url: 'http://localhost:4321/report/insp/reports',
+                headers: {
+                    'Authorization': 'Bearer ' + authToken
+                },
+                data
+            };
 
             axios(config)
-                .then((res) => {
-                    console.log(JSON.stringify(res.data));
-                    setReport(res.data);
+                .then(function (response) {
+                    console.log(JSON.stringify(response.data));
+                    setReport(response.data);
                 })
-                .catch((err) => {
-                    console.log(err);
+                .catch(function (error) {
+                    console.log(error);
                     setCantFetch(true);
-                    
                     //todo: only for testing
                     setReport([
                         {
@@ -37,10 +44,11 @@ export const InspHome = ({token}) => {
                     ])
                 });
         }
-        if (token || true) {
+        if (authToken || true) {
             authorize();
         }
     }, [update]);
+
 
 
     const columns = [{
@@ -57,43 +65,38 @@ export const InspHome = ({token}) => {
         text: 'Updated',
     }, {
         dataField: 'accept',
-        formatter: (cell, row) => AcceptBtn(row, token)
+        formatter: (cell, row) => AcceptBtn(row,)
     }, {
         dataField: 'decline',
-        formatter: (cell, row) => DeclineBtn(row, token)
+        formatter: (cell, row) => DeclineBtn(row)
     }];
 
     const expandRow = {
         renderer: (row, rowIndex) => {
             return (
                 <span>
-                    <div style={{background: "#F5F5F5", margin: 0, padding: 5}}>
-                        {`Description ${row.description}`}
-                    </div>
-                </span>
+                        <div style={{background: "#F5F5F5", margin: 0, padding: 5}}>
+                            {`Description ${row.description}`}
+                        </div>
+                    </span>
             )
         }
     }
 
-    if (cantFetch) {
-        return (
-            <div><h3>Can't fetch reports!</h3></div>
-        )
-    } else {
-        return (
-            <div className="content" style={{width: '100%'}}>
-                <div className='contentTable'>
-                    <BootstrapTable
-                        columns={columns}
-                        data={report}
-                        keyField='id'
-                        hover
-                        bordered={false}
-                        bootstrap4
-                        expandRow={expandRow}
-                    />
-                </div>
+
+    return (
+        <div className="content" style={{width: '100%'}}>
+            <div className='contentTable'>
+                <BootstrapTable
+                    columns={columns}
+                    data={report}
+                    keyField='id'
+                    hover
+                    bordered={false}
+                    bootstrap4
+                    expandRow={expandRow}
+                />
             </div>
-        )
-    }
+        </div>
+    )
 }

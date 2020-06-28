@@ -1,10 +1,15 @@
-import {connect} from 'react-redux';
+import React from "react";
+
+import {Route, Switch, useRouteMatch} from "react-router-dom";
 import {InspHome} from "./InspHome";
-import {setAuthTokenAction, onLogInAction} from '../../Redux/Actions/auth';
 
-
-const mapStateToProps = (state) => ({
-    token: state.auth.token,
-});
-
-export const RouteInspHome = connect(mapStateToProps, null)(InspHome);
+export const RouteInspHome = () => {
+    const { path, url } = useRouteMatch();
+    return (
+        <div className='Auth-root'>
+            <Switch>
+                <Route exact path={`${path}/`} component={InspHome}/>
+            </Switch>
+        </div>
+    );
+}

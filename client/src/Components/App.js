@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Auth from "./Auth";
 import './App.css';
 import { Footer } from './UI/Footer';
@@ -13,7 +13,8 @@ import {Error403} from "./Errors/Error403";
 import {Home} from "./Home";
 
 
-export const AppComponent = ({authToken, onAuthToken}) => {
+export const AppComponent = (props) => {
+    const [authToken, setAuthToken] = useState('');
     return (
       <div className="AppComponent">
           <Router>
@@ -22,8 +23,11 @@ export const AppComponent = ({authToken, onAuthToken}) => {
               <Switch>
                   <Route exact path='/' component={VariantText} />
                   <Route exact path='/error' component={Error403} />
-                  <Route path='/accounts' component={Auth} />
-                  <Route path='/home' component={Home} />
+                  <Route 
+                      path='/accounts' 
+                      render={(props) => <Auth {...props} setAuthToken={setAuthToken} />}
+                  />
+                  <Route path='/home' component={Home}/>
               </Switch>
 
               <Footer /> 

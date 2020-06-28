@@ -5,24 +5,32 @@ import {Link} from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
 import {Redirect} from "react-router-dom";
 import {StatusSwitch, CorrectButton, ChangeButton, Date} from '../../UI/HomeElements';
-import {homeGetReportsConfig} from '../Config';
 
 
-export const UserHome = ({token}) => {
+export const UserHome = (props) => {
     const [report, setReport] = useState([]);
     const [cantFetch, setCantFetch] = useState(false);
-
+    const authToken = useState(localStorage.getItem("token"));
     useEffect(() => {
         const authorize = () => {
-            const config = homeGetReportsConfig('user')(token);
+            const data = '';
+
+            const config = {
+                method: 'get',
+                url: 'http://localhost:4321/report/user/reports',
+                headers: {
+                    'Authorization': 'Bearer ' + authToken
+                },
+                data
+            };
 
             axios(config)
-                .then((res) => {
-                    console.log(JSON.stringify(res.data));
-                    setReport(res.data);
+                .then(function (response) {
+                    console.log(JSON.stringify(response.data));
+                    setReport(response.data);
                 })
-                .catch((err) => {
-                    console.log(err);
+                .catch(function (error) {
+                    console.log(error);
                     setCantFetch(true);
                     //todo: only for testing
                     setReport([
@@ -38,10 +46,11 @@ export const UserHome = ({token}) => {
                     ])
                 });
         }
-        if (token) {
+        if (authToken) {
             authorize();
         }
     }, []);
+    console.log("render")
 
     const expandRow = {
         renderer: (row, rowIndex) => {
@@ -86,7 +95,7 @@ export const UserHome = ({token}) => {
         text: 'Updated',
     }, {
         dataField: 'changeInspector',
-        formatter: (cell, row) => ChangeButton(row, token)
+        formatter: (cell, row) => ChangeButton(row)
     }, {
         dataField: 'correct',
         formatter: (cell, row) => CorrectButton(row)

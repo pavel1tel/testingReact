@@ -5,11 +5,10 @@ import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.css";
 import ReactIsCapsLockActive from '@matsun/reactiscapslockactive';
 import {Redirect} from "react-router-dom";
-import {registrationSubmitConfig} from '../Config';
 
 
-export const RegistrationFormComponent = () => {
-
+export const RegistrationForm = (props) => {
+    
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -77,7 +76,22 @@ export const RegistrationFormComponent = () => {
      const handleSubmit = (event) => {
         event.preventDefault();
 
-        const config = registrationSubmitConfig(username, email, password, confirmedPassword);
+        const data = JSON.stringify({
+            username,
+            email,
+            password,
+            confirmPassword: confirmedPassword
+        });
+
+        const config = {
+            method: 'post',
+            url: 'http://localhost:4321/accounts/create',
+            headers: {
+                'Content-Type': 'application/json',
+                'Cookie': 'JSESSIONID=101892E703543C95CC78FA5362024957'
+            },
+            data
+        };
 
         axios(config)
             .then(res => {
@@ -90,7 +104,7 @@ export const RegistrationFormComponent = () => {
             });
     }
 
-    if (!smthWentWrong && !hasErrors) {
+    if (!setSmthWentWrong) {
         return <Redirect to='/accounts/login' />
     } else {
         return (
