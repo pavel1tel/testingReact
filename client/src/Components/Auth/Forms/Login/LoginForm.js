@@ -12,6 +12,8 @@ export const LoginForm = (props) => {
     const [password, setPassword] = useState("");
     const [emailError, setEmailError] = useState('');
     const [redirect, setRedirect] = useState(false);
+    let executed = false;
+
     const handleChange = (emailOrPassword) => (event) => {
         event.preventDefault();
         const targetValue = event.target.value;
@@ -60,7 +62,9 @@ export const LoginForm = (props) => {
                 axios(config)
                     .then(function (response) {
                         console.log(response.data);
-                        localStorage.setItem('user', JSON.stringify(response.data))
+                        new Promise((resolve, reject) => {
+                            resolve(localStorage.setItem('user', JSON.stringify(response.data)))
+                        }).then(props.setUpdateNavbar(!props.updateNavbar))
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -74,6 +78,11 @@ export const LoginForm = (props) => {
             const errMsgs = validateLoginForm(email);
 
             setEmailError(errMsgs.emailErrMsg);
+        }
+        if(!executed) {
+            console.log(true);
+            props.setUpdateNavbar(!props.updateNavbar);
+            executed = true;
         }
     }, [email])
 

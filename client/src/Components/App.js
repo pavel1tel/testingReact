@@ -15,17 +15,19 @@ import {Home} from "./Home";
 
 export const AppComponent = (props) => {
     const [authToken, setAuthToken] = useState('');
+    const [updateNavbar, setUpdateNavbar] = useState(false);
     return (
       <div className="AppComponent">
           <Router>
-              <Navbar />
+              <Navbar update = {updateNavbar} />
 
               <Switch>
                   <Route exact path='/' component={VariantText} />
                   <Route exact path='/error' component={Error403} />
                   <Route 
                       path='/accounts' 
-                      render={(props) => <Auth {...props} setAuthToken={setAuthToken} />}
+                      render={(props) => <Auth {...props} setAuthToken={setAuthToken}
+                      setUpdateNavbar = {setUpdateNavbar} updateNavbar = {updateNavbar} />}
                   />
                   <Route path='/home' component={Home}/>
               </Switch>
