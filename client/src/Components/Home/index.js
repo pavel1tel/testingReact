@@ -6,7 +6,7 @@ import {RouteInspHome} from "./InspHome";
 export const Home = () => {
     const { path, url } = useRouteMatch();
     const authToken = localStorage.getItem("token");
-    if(!authToken) {
+    if(!authToken && false) {
         return <Redirect to='/accounts/login'/>
     } else {
         return (

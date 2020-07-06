@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {AcceptBtn, ChangeButton, CorrectButton, DeclineBtn, StatusSwitch} from "../../UI/HomeElements";
 import BootstrapTable from 'react-bootstrap-table-next';
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import axios from "axios";
 import {Search} from "../../UI/Search";
+import paginationFactory from "react-bootstrap-table2-paginator";
 
 export const InspHome = () => {
 
@@ -111,6 +112,7 @@ export const InspHome = () => {
                         bordered={false}
                         bootstrap4
                         expandRow={expandRow}
+                        pagination={paginationFactory()}
                     />
                 </div>
             </div>

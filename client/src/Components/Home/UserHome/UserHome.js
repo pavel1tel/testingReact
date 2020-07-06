@@ -6,6 +6,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import {Redirect} from "react-router-dom";
 import {StatusSwitch, CorrectButton, ChangeButton, Date} from '../../UI/HomeElements';
 import {Search} from "../../UI/Search";
+import paginationFactory from "react-bootstrap-table2-paginator";
 
 
 export const UserHome = (props) => {
@@ -35,7 +36,7 @@ export const UserHome = (props) => {
                 })
                 .catch(function (error) {
                     console.log(error);
-                    setCantFetch(true);
+                    //setCantFetch(true);
                     //todo: only for testing
                     setReport([
                         {
@@ -132,6 +133,7 @@ export const UserHome = (props) => {
                         bordered={false}
                         bootstrap4
                         expandRow={expandRow}
+                        pagination={paginationFactory()}
                     />
 
                     <Link to="/home/user/add">

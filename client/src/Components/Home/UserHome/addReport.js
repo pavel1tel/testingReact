@@ -42,7 +42,7 @@ export const  AddReport = () => {
             setDescription(targetValue);
         }
     }
-    if(submitted) {
+    if(submitted ) {
         return <Redirect to='/home/user'/>
     } else {
         return (
