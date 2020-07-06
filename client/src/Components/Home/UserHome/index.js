@@ -1,6 +1,4 @@
-import {LoginForm} from "../../Auth/Forms/Login";
-import {RegistrationForm} from "../../Auth/Forms/Registration";
-import React, {useEffect} from "react";
+import React from "react";
 import {UserHome} from "./UserHome";
 import {Route, Switch, useRouteMatch} from "react-router-dom";
 import {AddReport} from "./addReport";

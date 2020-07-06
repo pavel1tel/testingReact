@@ -26,7 +26,7 @@ export const UpdateReport = () => {
 
         axios(config)
             .then(function (response) {
-                console.log(JSON.stringify(response.data));
+                setUpdate(true);
             })
             .catch(function (error) {
                 console.log(error);
@@ -72,7 +72,7 @@ export const UpdateReport = () => {
         }
     }
     if (update) {
-        return <Redirect to='/home/user'/>;
+        return (<Redirect to='/home/user'/>);
     } else {
         return (
             <div className="content">

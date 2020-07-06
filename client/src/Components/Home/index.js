@@ -12,8 +12,8 @@ export const Home = () => {
         return (
             <div className='Auth-root'>
                 <Switch>
-                    <Route exact path={`${path}/user`} component={RouteUserHome}/>
-                    <Route exact path={`${path}/insp`} component={RouteInspHome}/>
+                    <Route path={`${path}/user`} component={RouteUserHome} />
+                    <Route path={`${path}/insp`} component={RouteInspHome}/>
                 </Switch>
             </div>
         );

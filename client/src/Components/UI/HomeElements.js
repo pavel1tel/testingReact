@@ -97,6 +97,11 @@ export const AcceptBtn = (row) => {
 }
 
 const accept = (event, row) => {
+
+    const sleep = (milliseconds) => {
+        return new Promise(resolve => setTimeout(resolve, milliseconds))
+    }
+
     const authToken = localStorage.getItem("token");
     let data = "";
 
@@ -112,12 +117,11 @@ const accept = (event, row) => {
 
     axios(config)
         .then(function (response) {
-            console.log(JSON.stringify(response.data));
+            sleep(10000);
         })
         .catch(function (error) {
             console.log(error);
         });
-
 }
 
 export const DeclineBtn =(row) => {
@@ -129,6 +133,11 @@ export const DeclineBtn =(row) => {
 }
 
 const decline = (event, row) => {
+
+    const sleep = (milliseconds) => {
+        return new Promise(resolve => setTimeout(resolve, milliseconds))
+    }
+
     const authToken = localStorage.getItem("token");
     const reason = window.prompt("Enter a reason")
     let data = JSON.stringify({"declineReason": reason});
@@ -145,9 +154,9 @@ const decline = (event, row) => {
 
     axios(config)
         .then(function (response) {
-            console.log(JSON.stringify(response.data));
+            sleep(10000)
         })
         .catch(function (error) {
             console.log(error);
-        });
+        })
 }
