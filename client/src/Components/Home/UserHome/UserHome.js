@@ -5,12 +5,15 @@ import {Link} from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
 import {Redirect} from "react-router-dom";
 import {StatusSwitch, CorrectButton, ChangeButton, Date} from '../../UI/HomeElements';
+import {Search} from "../../UI/Search";
 
 
 export const UserHome = (props) => {
     const [report, setReport] = useState([]);
+    const [initialReport, setInitialReport] = useState([]);
     const [cantFetch, setCantFetch] = useState(false);
     const authToken = useState(localStorage.getItem("token"));
+
     useEffect(() => {
         const authorize = () => {
             const data = '';
@@ -28,6 +31,7 @@ export const UserHome = (props) => {
                 .then(function (response) {
                     console.log(JSON.stringify(response.data));
                     setReport(response.data);
+                    setInitialReport(response.data);
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -44,13 +48,25 @@ export const UserHome = (props) => {
                             "declineReason": "ne pravilna"
                         }
                     ])
+                    setInitialReport(
+                        [
+                            {
+                                "id": "1",
+                                "name": "name",
+                                "description": "desc",
+                                "status": "NOT_ACCEPTED",
+                                "created": "2020-02-02",
+                                "updated": "2020-02-02",
+                                "declineReason": "ne pravilna"
+                            }
+                        ]
+                    )
                 });
         }
         if (authToken) {
             authorize();
         }
     }, []);
-    console.log("render")
 
     const expandRow = {
         renderer: (row, rowIndex) => {
@@ -106,6 +122,7 @@ export const UserHome = (props) => {
     } else {
         return (
             <div className="content" style={{width: '100%'}}>
+                <Search reports={initialReport} setReport={setReport}/>
                 <div className='contentTable'>
                     <BootstrapTable
                         columns={columns}

@@ -18,3 +18,9 @@
     border-top: 0.5px solid grey;
     padding: 5px;
 }
+
+#correct {
+    text-decoration: none;
+    text-decoration-color: white;
+    color: white;
+}

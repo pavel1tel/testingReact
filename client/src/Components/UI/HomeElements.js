@@ -26,7 +26,7 @@ export const CorrectButton = (row) => {
     if (row.status === "NOT_ACCEPTED") {
         return (
                 <button className="btn btn-warning">
-                    <Link to={"/home/user/update/" + row.id}>Correct</Link>
+                    <Link id="correct"  to={"/home/user/update/" + row.id}>Correct</Link>
                 </button>
         )
     }

@@ -139,18 +139,6 @@ export const LoginForm = (props) => {
                             Sing In
                         </button>
                     </div>
-                    <div className="clearfix">
-                        <label className="pull-left checkbox-inline">
-                            <input
-                                type="checkbox"
-                                name="remember-me"
-                                value={"remember me"}
-                            />
-                        </label>
-                        <a href="#" className="pull-right">
-                            forgot password
-                        </a>
-                    </div>
                     {/*<div style="display: flex; align-items: center; justify-content: center">*/}
                     {/*    <p className="error" th:if="${param.error}"*/}
                     {/*       th:text="#{string.login.invalid.username.password}"></p>*/}

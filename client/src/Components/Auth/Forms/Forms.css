@@ -46,8 +46,8 @@ body {
 
 .capslock {
     display: block;
-    font-size: 13px;
-    color: yellow;
+    font-size: 16px;
+    color: #acac32;
     text-align: center;
 }
 
@@ -105,5 +105,6 @@ body {
 }
 
 .pull-right {
+    text-align: right;
     padding-left: 2%;
 }
