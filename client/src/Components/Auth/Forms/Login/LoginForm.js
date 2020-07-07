@@ -12,6 +12,7 @@ export const LoginForm = (props) => {
     const [password, setPassword] = useState("");
     const [emailError, setEmailError] = useState('');
     const [redirect, setRedirect] = useState(false);
+    const [error, setError] = useState(false);
     let executed = false;
 
     const handleChange = (emailOrPassword) => (event) => {
@@ -70,7 +71,7 @@ export const LoginForm = (props) => {
                         console.log(error);
                     });
             })
-            .catch(err => console.log(err));
+            .catch(err => setError(true));
     }
 
     useEffect(() => {
@@ -131,6 +132,11 @@ export const LoginForm = (props) => {
                                 <span className="capslock">note: Capslock is active </span>}
                         </ReactIsCapsLockActive>
                     </div>
+                        {error &&
+                        <div className="form-group">
+                            <p className="error">Invalid email and password</p>
+                        </div>
+                         }
                     <div className="form-group">
                         <button
                             type="submit"

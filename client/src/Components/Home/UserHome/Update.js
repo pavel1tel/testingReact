@@ -9,7 +9,8 @@ export const UpdateReport = () => {
     const [description, setDescription] = useState("");
     const [update, setUpdate] = useState(false);
 
-    const handleSubmit = () => {
+    const handleSubmit = (event) => {
+        event.preventDefault();
         let data = JSON.stringify({"name": name,"description": description});
         const authToken = localStorage.getItem("token");
 
@@ -29,6 +30,7 @@ export const UpdateReport = () => {
                 setUpdate(true);
             })
             .catch(function (error) {
+                setUpdate(true);
                 console.log(error);
             });
 
@@ -79,7 +81,7 @@ export const UpdateReport = () => {
                 <h3>Reason: reason</h3>
                 <hr/>
                 <h1>Update</h1>
-                <form method="post" onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} method="post">
 
                     <div className="form-group">
                         <label htmlFor="name">Name</label>

@@ -44,12 +44,26 @@ export const InspHome = () => {
                             "description": "desc",
                             "created": "2020-02-02",
                             "updated": "2020-02-02",
+                        },
+                        {
+                            "id": "2",
+                            "name": "name",
+                            "description": "desc",
+                            "created": "2020-02-02",
+                            "updated": "2020-02-02",
                         }
                     ])
                     setInitialReport(
                         [
                             {
                                 "id": "1",
+                                "name": "name",
+                                "description": "desc",
+                                "created": "2020-02-02",
+                                "updated": "2020-02-02",
+                            },
+                            {
+                                "id": "2",
                                 "name": "name",
                                 "description": "desc",
                                 "created": "2020-02-02",
@@ -79,10 +93,10 @@ export const InspHome = () => {
         text: 'Updated',
     }, {
         dataField: 'accept',
-        formatter: (cell, row) => AcceptBtn(row,)
+        formatter: (cell, row) => AcceptBtn(row, update, setUpdate)
     }, {
         dataField: 'decline',
-        formatter: (cell, row) => DeclineBtn(row)
+        formatter: (cell, row) => DeclineBtn(row, update, setUpdate)
     }];
 
     const expandRow = {
@@ -97,7 +111,7 @@ export const InspHome = () => {
         }
     }
 
-    if (cantFetch) {
+    if (cantFetch && false) {
         return <Redirect to='/error'/>
     } else {
         return (
