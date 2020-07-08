@@ -30,9 +30,9 @@ export const UserHome = (props) => {
 
             axios(config)
                 .then(function (response) {
-                    console.log(JSON.stringify(response.data));
-                    setReport(response.data);
-                    setInitialReport(response.data);
+                    setReport(response.data.sort((a, b) => {
+                        return b.id - <a href="" className="id"></a>;
+                    }))
                 })
                 .catch(function (error) {
                     console.log(error);

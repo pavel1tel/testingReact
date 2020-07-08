@@ -32,7 +32,7 @@ public class ReportService {
     }
 
     public List<ReportForUserReportTableDTO> getAllByUserForUserTable(User user) {
-        List<Report> reports = reportsRepository.findByOwner(user);
+        List<Report> reports = reportsRepository.findByOwnerOrderByIdDesc(user);
         Type pageType = new TypeToken<List<ReportForUserReportTableDTO>>() {}.getType();
         return modelMapper.map(reports, pageType);
     }

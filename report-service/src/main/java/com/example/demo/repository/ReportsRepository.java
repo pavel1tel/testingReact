@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface ReportsRepository extends JpaRepository<Report, Long> {
     Optional<Report> findByName(String name);
     //@Query("select r from Report r where owner = ?1 and name like %?2%")
-    List<Report> findByOwner(User user);
+    List<Report> findByOwnerOrderByIdDesc(User user);
     //@Query("select r from Report r join User u where u = ?1 and r.status = ?2 and r.name like %?3%")
     List<Report> findAllByInspectorsAndStatus(User inspector, ReportStatus status);
 }
